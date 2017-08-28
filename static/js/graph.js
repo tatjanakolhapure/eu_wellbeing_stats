@@ -71,7 +71,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 				if (p["value"] == undefined || p["value"] === 0) {return p["key"] + ": undefined";}
 				else {return p["key"] + ": " + p["value"] + " out of 10";}
 			})
-		.colors(['#ccc','#E2F2FF','#C4E4FF','#9ED2FF','#81C5FF','#6BBAFF','#51AEFF','#36A2FF','#1E96FF','#0089FF','#0061B5'])
+		.colors(['#ccc','#E2F2FF','#C4E4FF','#9ED2FF','#81C5FF','#C4E4FF','#81C5FF','#51AEFF','#1E96FF','#0061B5','#0055b5'])
         .colorDomain([0, 10])
 		.projection(d3.geo.mercator()
 			.center([32,50])
@@ -82,3 +82,5 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     dc.renderAll();
 
 }
+
+//['#ccc','#E2F2FF','#9ED2FF','#6BBAFF','#51AEFF','#0061B5','#0055b5']
