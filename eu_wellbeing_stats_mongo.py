@@ -9,8 +9,8 @@ def mongo_connect():
         print "Could not connect to MongoDB: %s" % e
 
 conn = mongo_connect()
-db = conn['eu_wellbeing_stats']
-coll = db.my_collection
+db = conn['europeStats']
+coll = db.wellbeing
 coll.drop()
 
 countries = [
