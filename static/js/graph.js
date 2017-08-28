@@ -4,9 +4,10 @@
 
 queue()
     .defer(d3.json, "/EuropeStats/wellbeing")
+    .defer(d3.json, "static/geojson/world-countries.json")
     .await(makeGraphs);
 
-function makeGraphs(error, EuropeStatsWellbeing) {
+function makeGraphs(error, EuropeStatsWellbeing, countriesJson) {
     if (error) {
         console.error("makeGraphs error on receiving dataset:", error.statusText);
         throw error;
