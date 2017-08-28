@@ -1,0 +1,12 @@
+.country,
+.dc-chart .deselected path, .dc-chart .deselected circle,
+.dc-chart .selected path, .dc-chart .selected circle
+{
+    stroke: white;
+    stroke-width: 1px;
+}
+.country.bermuda path
+{
+    display:none;
+}
+
