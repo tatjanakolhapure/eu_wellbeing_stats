@@ -85,6 +85,7 @@ countries = [
     },
     {
         "country": "Bulgaria",
+        "life_satisfaction": "",
         "life_expectancy": "66.4",
         "life_is_worthwhile": {"agree": "49", "strongly_agree": "25"},
         "mental_health_index": "64",
@@ -100,6 +101,7 @@ countries = [
     },
     {
         "country": "Croatia",
+        "life_satisfaction": "",
         "life_expectancy": "69.4",
         "life_is_worthwhile": {"agree": "48", "strongly_agree": "36"},
         "mental_health_index": "62",
@@ -115,6 +117,7 @@ countries = [
     },
     {
         "country": "Cyprus",
+        "life_satisfaction": "",
         "life_expectancy": "71.3",
         "life_is_worthwhile": {"agree": "42", "strongly_agree": "33"},
         "mental_health_index": "61",
@@ -370,6 +373,7 @@ countries = [
     },
     {
         "country": "Lithuania",
+        "life_satisfaction": "",
         "life_expectancy": "66.1",
         "good_health": "44.9",
         "life_is_worthwhile": {"agree": "53", "strongly_agree": "16"},
@@ -432,6 +436,7 @@ countries = [
     },
     {
         "country": "Malta",
+        "life_satisfaction": "",
         "life_expectancy": "71.7",
         "life_is_worthwhile": {"agree": "64", "strongly_agree": "24"},
         "mental_health_index": "58",
@@ -512,7 +517,8 @@ countries = [
         "loneliness": "9.8"
     },
     {
-        "country": "Serbia",
+        "country": "Republic of Serbia",
+        "life_satisfaction": "",
         "life_expectancy": "67.7",
         "life_is_worthwhile": {"agree": "47", "strongly_agree": "34"},
         "mental_health_index": "54",
@@ -548,6 +554,7 @@ countries = [
     },
     {
         "country": "Romania",
+        "life_satisfaction": "",
         "life_expectancy": "66.8",
         "life_is_worthwhile": {"agree": "44", "strongly_agree": "36"},
         "mental_health_index": "57",
