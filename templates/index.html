@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Europe Wellbeing Stats</title>
+	<link rel="stylesheet" href="{{ url_for ('static', filename='lib/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{ url_for ('static', filename='lib/css/keen-dashboards.css')}}">
+	<link rel="stylesheet" href="{{ url_for ('static', filename='lib/css/dc.css')}}">
+	<link rel="stylesheet" href="{{ url_for ('static', filename='css/custom.css')}}">
+</head>
+
+<body class="application">
+
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="./">Europe Wellbeing</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="outer" class="container-fluid">	
+		<div class="row">
+			<div class="col-sm-6">
+			<!-- Life Satisfaction Map -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Mean rating of life satisfaction - 2015</div>
+					<div class="chart-stage">
+						<div id="life-satisfaction-map"></div>
+					</div>
+				</div>
+			<!-- Life Satisfaction Map -->
+			</div>
+			<div class="col-sm-6">
+			<!-- Happiness Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Rating of happiness - 2014</div>
+					<div class="chart-stage">
+						<div id="happiness-chart"></div>
+					</div>
+				</div>
+			<!-- Happiness Chart -->
+			</div>
+			<div class="col-sm-6">
+			<!-- Personal finance Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Personal finance</div>
+					<div class="chart-stage">
+						<div id="personal-finance-chart"></div>
+					</div>
+				</div>
+			<!-- Personal finance Chart -->
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-6">
+					<!-- Median equivalised net income Chart -->
+						<div class="chart-wrapper">
+							<div class="chart-title">Median equivalised net income - 2015</div>
+							<div class="chart-stage">
+								<div id="net-income-chart"></div>
+							</div>
+						</div>
+					<!-- Median equivalised net income Chart -->
+					</div>
+					<div class="col-sm-6">
+					<!-- Unemployment rate Chart -->
+						<div class="chart-wrapper">
+							<div class="chart-title">Harmonised unemployment rate - 2015</div>
+							<div class="chart-stage">
+								<div id="unemployment-rate-chart"></div>
+							</div>
+						</div>
+					<!-- Unemployment rate Chart -->
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+			<!-- Life worthwhileness Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">I strongly agree or agree what I do in life is worthwhile - 2012</div>
+					<div class="chart-stage">
+						<div id="life-worthwhileness-chart"></div>
+					</div>
+				</div>
+			<!-- Life worthwhileness Chart -->
+			</div>
+			<div class="col-sm-6">
+			<!-- Where Europeans Live Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Where Europeans live</div>
+					<div class="chart-stage">
+						<div id="where-europeans-live-chart"></div>
+					</div>
+				</div>
+			<!-- Where Europeans Live Chart -->
+			</div>
+			<div class="col-sm-6">
+			<!-- Neighbourhood Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Feeling close to people in the area where I live - 2012</div>
+					<div class="chart-stage">
+						<div id="neighbourhood-chart"></div>
+					</div>
+				</div>
+			<!-- Neighbourhood Chart -->
+			</div>
+			<div class="col-sm-6">
+			<!-- Relationships Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Relationships</div>
+					<div class="chart-stage">
+						<div id="relationships-chart"></div>
+					</div>
+				</div>
+			<!-- Relationships Chart -->
+			</div>
+			<div class="col-sm-6">
+			<!-- Health Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Health</div>
+					<div class="chart-stage">
+						<div id="health-chart"></div>
+					</div>
+				</div>
+			<!-- Health Chart -->
+			</div>
+			<div class="col-sm-6">
+			<!-- Life Expectancy Chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">Life Expectancy</div>
+					<div class="chart-stage">
+						<div id="life-expectancy-chart"></div>
+					</div>
+				</div>
+			<!-- Life Expectancy Chart -->
+			</div>
+		</div>
+  </div>
+
+  <hr>
+
+  <p class="small text-muted"> Europe Wellbeing Data by Tatjana Kolhapure</p>
+
+  <script src="{{ url_for ('static', filename='lib/js/jquery.min.js')}}"></script>
+  <script src="{{ url_for ('static', filename='lib/js/bootstrap.min.js')}}"></script>
+  <script src="{{ url_for ('static', filename='lib/js/crossfilter.js')}}"></script>
+  <script src="{{ url_for ('static', filename='lib/js/d3.js')}}"></script>
+  <script src="{{ url_for ('static', filename='lib/js/dc.js')}}"></script>
+  <script src="{{ url_for ('static', filename='lib/js/queue.js')}}"></script>
+  <script src="{{ url_for ('static', filename='lib/js/keen.min.js')}}"></script>
+  <script src="{{ url_for ('static', filename='js/graph.js')}}"></script>
+
+</body>
+</html>
