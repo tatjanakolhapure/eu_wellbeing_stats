@@ -174,7 +174,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.x(d3.scale.ordinal().domain(countryDim.bottom(Infinity).map(function(d) {return d.country})))
 		.xUnits(dc.units.ordinal)
 		.renderHorizontalGridLines(true)
-		.legend(dc.legend().x(620).y(20).itemHeight(13).gap(5))
+		.legend(dc.legend().x(650).y(20).itemHeight(13).gap(5))
 		.brushOn(false)
 		.compose([
 			dc.lineChart(personalFinanceChart)
@@ -192,13 +192,13 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		]);
 
    neighbourhoodChart
-		.width(750)
-		.height(550)
+		.width(770)
+		.height(350)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(neighbourhoodDim.bottom(Infinity).map(function(d) {if (d.close_to_neighbours) {return d.country} else {return "undefined"}})))
 		.xUnits(dc.units.ordinal)
 		.renderHorizontalGridLines(true)
-		.legend(dc.legend().x(80).y(20).itemHeight(13).gap(5))
+		.legend(dc.legend().x(670).y(20).itemHeight(13).gap(5))
 		.brushOn(false)
 		.compose([
 			dc.lineChart(neighbourhoodChart)
