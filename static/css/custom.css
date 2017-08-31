@@ -10,3 +10,13 @@
     display:none;
 }
 
+.dc-chart .x.axis text
+{
+    text-anchor: end !important;
+    transform: rotate(-45deg);
+}
+
+.dc-chart .axis text
+{
+    font: 12px sans-serif;
+}
