@@ -34,7 +34,7 @@ countries = [
         "finances_satisfaction": "26.0",
         "ends_meet": "13.4",
         "happiness": {"extremely_unhappy": "1.0", "1":"1.0", "2": "1.7", "3": "2.4", "4": "2.7", "5": "7.4",
-                      "6": "7.6", "7": "22.3", "8": "26.5", "9": "15.1", "extremely_happy": "12.4"},
+                      "6": "7.6", "7": "22.3", "8": "26.5", "9": "15.1", "happy": "12.4"},
         "loneliness": "6.2"
     },
     {
@@ -57,7 +57,7 @@ countries = [
         "finances_satisfaction": "16.0",
         "ends_meet": "20.5",
         "happiness": {"extremely_unhappy": "0.2", "1": "0.0", "2": "0.5", "3": "1.3", "4": "1.2", "5": "4.7",
-                      "6": "5.6", "7": "20.5", "8": "38.5", "9": "18.9", "extremely_happy": "8.6"},
+                      "6": "5.6", "7": "20.5", "8": "38.5", "9": "18.9", "happy": "8.6"},
         "loneliness": "6.6"
     },
     {
@@ -80,12 +80,12 @@ countries = [
         "finances_satisfaction": "12.3",
         "ends_meet": "26.6",
         "happiness": {"extremely_unhappy": "0.9", "1": "0.6", "2": "1.3", "3": "2.5", "4": "4.8", "5": "13.8",
-                      "6": "12.8", "7": "18.7", "8": "24.1", "9": "12.9", "extremely_happy": "7.6"},
+                      "6": "12.8", "7": "18.7", "8": "24.1", "9": "12.9", "happy": "7.6"},
         "loneliness": "11.3"
     },
     {
         "country": "Bulgaria",
-        "life_satisfaction": "",
+        "life_satisfaction": "undefined",
         "life_expectancy": "66.4",
         "life_is_worthwhile": {"agree": "49", "strongly_agree": "25"},
         "mental_health_index": "64",
@@ -101,7 +101,7 @@ countries = [
     },
     {
         "country": "Croatia",
-        "life_satisfaction": "",
+        "life_satisfaction": "undefined",
         "life_expectancy": "69.4",
         "life_is_worthwhile": {"agree": "48", "strongly_agree": "36"},
         "mental_health_index": "62",
@@ -117,7 +117,7 @@ countries = [
     },
     {
         "country": "Cyprus",
-        "life_satisfaction": "",
+        "life_satisfaction": "undefined",
         "life_expectancy": "71.3",
         "life_is_worthwhile": {"agree": "42", "strongly_agree": "33"},
         "mental_health_index": "61",
@@ -151,7 +151,7 @@ countries = [
         "finances_satisfaction": "37.7",
         "ends_meet": "10.4",
         "happiness": {"extremely_unhappy": "0.1", "1": "0.4", "2": "0.8", "3": "1.2", "4": "1.0", "5": "3.1",
-                      "6": "4.0", "7": "11.6", "8": "30.6", "9": "28.5", "extremely_happy": "18.7"},
+                      "6": "4.0", "7": "11.6", "8": "30.6", "9": "28.5", "happy": "18.7"},
         "loneliness": "3.4"
     },
     {
@@ -174,7 +174,7 @@ countries = [
         "finances_satisfaction": "7.5",
         "ends_meet": "16.2",
         "happiness": {"extremely_unhappy": "0.6", "1": "0.4", "2": "1.5", "3": "3.3", "4": "3.8", "5": "13.7",
-                      "6": "10.8", "7": "20.7", "8": "23.0", "9": "12.6", "extremely_happy": "9.7"},
+                      "6": "10.8", "7": "20.7", "8": "23.0", "9": "12.6", "happy": "9.7"},
         "loneliness": "7.3"
     },
     {
@@ -197,7 +197,7 @@ countries = [
         "finances_satisfaction": "28.6",
         "ends_meet": "7.0",
         "happiness": {"extremely_unhappy": "0.1", "1": "0.1", "2": "0.3", "3": "0.8", "4": "0.9", "5": "3.5",
-                      "6": "4.1", "7": "14.8", "8": "35.4", "9": "31.3", "extremely_happy": "8.6"},
+                      "6": "4.1", "7": "14.8", "8": "35.4", "9": "31.3", "happy": "8.6"},
         "loneliness": "3.1"
     },
     {
@@ -220,7 +220,7 @@ countries = [
         "finances_satisfaction": "10.4",
         "ends_meet": "19.9",
         "happiness": {"extremely_unhappy": "0.5", "1": "0.2", "2": "0.9", "3": "1.6", "4": "2.6", "5": "9.7",
-                      "6": "9.2", "7": "20.7", "8": "31.2", "9": "14.7", "extremely_happy": "8.9"},
+                      "6": "9.2", "7": "20.7", "8": "31.2", "9": "14.7", "happy": "8.9"},
         "loneliness": "9.6"
     },
     {
@@ -243,7 +243,7 @@ countries = [
         "finances_satisfaction": "18.7",
         "ends_meet": "7.6",
         "happiness": {"extremely_unhappy": "0.4", "1": "0.4", "2": "0.7", "3": "1.9", "4": "2.6", "5": "7.6",
-                      "6": "6.3", "7": "17.4", "8": "31.8", "9": "19.5", "extremely_happy": "11.3"},
+                      "6": "6.3", "7": "17.4", "8": "31.8", "9": "19.5", "happy": "11.3"},
         "loneliness": "4.0"
     },
     {
@@ -286,7 +286,7 @@ countries = [
         "finances_satisfaction": "6.1",
         "ends_meet": "46.6",
         "happiness": {"extremely_unhappy": "0.9", "1": "0.7", "2": "3.1", "3": "6.9", "4": "6.0", "5": "17.2",
-                      "6": "13.3", "7": "18.6", "8": "16.8", "9": "8.0", "extremely_happy": "8.5"},
+                      "6": "13.3", "7": "18.6", "8": "16.8", "9": "8.0", "happy": "8.5"},
         "loneliness": "11.0"
     },
     {
@@ -329,7 +329,7 @@ countries = [
         "finances_satisfaction": "12.2",
         "ends_meet": "32.0",
         "happiness": {"extremely_unhappy": "0.4", "1": "0.4", "2": "1.2", "3": "2.1", "4": "3.2", "5": "8.6",
-                      "6": "9.9", "7": "18.6", "8": "31.2", "9": "14.5", "extremely_happy": "9.9"},
+                      "6": "9.9", "7": "18.6", "8": "31.2", "9": "14.5", "happy": "9.9"},
         "loneliness": "4.6"
     },
     {
@@ -373,7 +373,7 @@ countries = [
     },
     {
         "country": "Lithuania",
-        "life_satisfaction": "",
+        "life_satisfaction": "undefined",
         "life_expectancy": "66.1",
         "good_health": "44.9",
         "life_is_worthwhile": {"agree": "53", "strongly_agree": "16"},
@@ -388,7 +388,7 @@ countries = [
         "finances_satisfaction": "8.8",
         "ends_meet": "28.9",
         "happiness": {"extremely_unhappy": "0.7", "1": "0.8", "2": "2.5", "3": "5.6", "4": "7.3", "5": "16.2",
-                      "6": "11.0", "7": "18.0", "8": "23.3", "9": "10.4", "extremely_happy": "4.3"},
+                      "6": "11.0", "7": "18.0", "8": "23.3", "9": "10.4", "happy": "4.3"},
         "loneliness": "7.8"
     },
     {
@@ -431,12 +431,12 @@ countries = [
         "finances_satisfaction": "21.9",
         "ends_meet": "12.7",
         "happiness": {"extremely_unhappy": "0.1", "1":"0.0", "2": "0.3", "3": "0.8", "4": "1.0", "5": "2.3",
-                      "6": "5.2", "7": "21.1", "8": "41.1", "9": "20.2", "extremely_happy": "7.8"},
+                      "6": "5.2", "7": "21.1", "8": "41.1", "9": "20.2", "happy": "7.8"},
         "loneliness": "2.7"
     },
     {
         "country": "Malta",
-        "life_satisfaction": "",
+        "life_satisfaction": "undefined",
         "life_expectancy": "71.7",
         "life_is_worthwhile": {"agree": "64", "strongly_agree": "24"},
         "mental_health_index": "58",
@@ -467,7 +467,7 @@ countries = [
         "finances_satisfaction": "33.1",
         "ends_meet": "5.1",
         "happiness": {"extremely_unhappy": "0.1", "1": "0.2", "2": "0.7", "3": "1.2", "4": "1.4", "5": "4.7",
-                      "6": "5.5", "7": "15.5", "8": "30.9", "9": "24.8", "extremely_happy": "15.1"},
+                      "6": "5.5", "7": "15.5", "8": "30.9", "9": "24.8", "happy": "15.1"},
         "loneliness": "3.7"
     },
     {
@@ -490,7 +490,7 @@ countries = [
         "finances_satisfaction": "13.0",
         "ends_meet": "29.4",
         "happiness": {"extremely_unhappy": "0.5", "1": "0.7", "2": "1.3", "3": "2.7", "4": "3.0", "5": "13.6",
-                      "6": "7.4", "7": "17.0", "8": "25.8", "9": "15.2", "extremely_happy": "13.0"},
+                      "6": "7.4", "7": "17.0", "8": "25.8", "9": "15.2", "happy": "13.0"},
         "loneliness": "11.7"
     },
     {
@@ -513,12 +513,12 @@ countries = [
         "finances_satisfaction": "3.9",
         "ends_meet": "40.4",
         "happiness": {"extremely_unhappy": "1.5", "1": "0.9", "2": "1.1", "3": "3.7", "4": "3.7", "5": "14.7",
-                      "6": "10.7", "7": "17.0", "8": "23.2", "9": "9.4", "extremely_happy": "14.1"},
+                      "6": "10.7", "7": "17.0", "8": "23.2", "9": "9.4", "happy": "14.1"},
         "loneliness": "9.8"
     },
     {
-        "country": "Republic of Serbia",
-        "life_satisfaction": "",
+        "country": "Serbia",
+        "life_satisfaction": "undefined",
         "life_expectancy": "67.7",
         "life_is_worthwhile": {"agree": "47", "strongly_agree": "34"},
         "mental_health_index": "54",
@@ -554,7 +554,7 @@ countries = [
     },
     {
         "country": "Romania",
-        "life_satisfaction": "",
+        "life_satisfaction": "undefined",
         "life_expectancy": "66.8",
         "life_is_worthwhile": {"agree": "44", "strongly_agree": "36"},
         "mental_health_index": "57",
@@ -588,7 +588,7 @@ countries = [
         "finances_satisfaction": "7.9",
         "ends_meet": "28.7",
         "happiness": {"extremely_unhappy": "0.6", "1": "0.6", "2": "1.4", "3": "2.8", "4": "4.1", "5": "15.0",
-                      "6": "7.9", "7": "16.4", "8": "25.5", "9": "14.2", "extremely_happy": "11.4"},
+                      "6": "7.9", "7": "16.4", "8": "25.5", "9": "14.2", "happy": "11.4"},
         "loneliness": "6.0"
     },
     {
@@ -611,7 +611,7 @@ countries = [
         "finances_satisfaction": "35.5",
         "ends_meet": "5.4",
         "happiness": {"extremely_unhappy": "0.1", "1": "0.1", "2": "0.3", "3": "0.8", "4": "1.5", "5": "4.4",
-                      "6": "6.4", "7": "18.1", "8": "32.8", "9": "23.6", "extremely_happy": "11.9"},
+                      "6": "6.4", "7": "18.1", "8": "32.8", "9": "23.6", "happy": "11.9"},
         "loneliness": "4.9"
     },
     {
@@ -634,7 +634,7 @@ countries = [
         "finances_satisfaction": "7.4",
         "ends_meet": "35.2",
         "happiness": {"extremely_unhappy": "0.4", "1": "0.4", "2": "0.9", "3": "1.9", "4": "2.1", "5": "8.8",
-                      "6": "9.5", "7": "20.7", "8": "28.2", "9": "14.3", "extremely_happy": "12.7"},
+                      "6": "9.5", "7": "20.7", "8": "28.2", "9": "14.3", "happy": "12.7"},
         "loneliness": "8.5"
     },
     {
@@ -654,7 +654,7 @@ countries = [
         "finances_satisfaction": "32.8",
         "ends_meet": "11.2",
         "happiness": {"extremely_unhappy": "0.1", "1": "0.1", "2": "0.3", "3": "0.9", "4": "1.3", "5": "3.9",
-                      "6": "5.4", "7": "13.5", "8": "32.4", "9": "26.1", "extremely_happy": "16.0"},
+                      "6": "5.4", "7": "13.5", "8": "32.4", "9": "26.1", "happy": "16.0"},
         "loneliness": "3.7"
     },
     {
@@ -697,7 +697,7 @@ countries = [
         "finances_satisfaction": "18.5",
         "ends_meet": "16.4",
         "happiness": {"extremely_unhappy": "0.7", "1": "0.4", "2": "1.1", "3": "2.6", "4": "2.2", "5": "6.3",
-                      "6": "7.6", "7": "18.0", "8": "28.3", "9": "19.2", "extremely_happy": "13.7"},
+                      "6": "7.6", "7": "18.0", "8": "28.3", "9": "19.2", "happy": "13.7"},
         "loneliness": "5.0"
     }
 ]
