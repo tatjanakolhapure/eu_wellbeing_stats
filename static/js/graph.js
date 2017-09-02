@@ -120,6 +120,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.brushOn(false)
 		.dimension(happinessDim)
 		.group(happiness_high_group)
+        .elasticY(true)
 		.transitionDuration(500)
 		.x(d3.scale.ordinal())
 		.xUnits(dc.units.ordinal)
