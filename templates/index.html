@@ -32,14 +32,43 @@
 			<!-- Life Satisfaction Map -->
 			</div>
 			<div class="col-sm-6">
-			<!-- Happiness Chart -->
-				<div class="chart-wrapper">
-					<div class="chart-title">Rating of happiness - 2014</div>
-					<div class="chart-stage">
-						<div id="happiness-chart"></div>
+				<div class="row">
+					<div class="col-sm-9">
+					<!-- Happiness Chart -->
+						<div class="chart-wrapper">
+							<div class="chart-title">Rating of happiness - 2014</div>
+							<div class="chart-stage">
+								<div id="happiness-chart"></div>
+							</div>	                    
+						</div>
+					<!-- Happiness Chart -->
+					</div>
+					<div class="col-sm-3">
+					<!-- Select Happiness by Rating -->
+						<div class="chart-wrapper">
+							<div class="chart-title">Happiness by Rating</div>
+							<div class="chart-stage">
+
+							<select id="select-happiness-rating"> <!--Supplement an id here instead of using 'name'-->
+								<option value="total" selected>total</option> 
+								<option value="ten">extremely happy</option>
+								<option value="nine">9</option>
+								<option value="eight">8</option>
+								<option value="seven">7</option>
+								<option value="six">6</option>
+								<option value="five">5</option>
+								<option value="four">4</option>
+								<option value="three">3</option>
+								<option value="two">2</option>
+								<option value="one">1</option>
+								<option value="zero">extremely unhappy</option>
+							</select>
+
+							</div>
+						</div>
+					<!-- Select Happiness by Rating -->			
 					</div>
 				</div>
-			<!-- Happiness Chart -->
 			</div>
 			<div class="col-sm-6">
 			<!-- Personal finance Chart -->
