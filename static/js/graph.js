@@ -58,6 +58,13 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         d.loneliness = +d.loneliness;
     });
 
+    $(document).ready(function()
+    {
+        $("#select-happiness-rating").on( "change", selectHappinessRating);
+        $("#select-personal-finance").on( "change", selectPersonalFinance);
+    });
+
+
     //Create a Crossfilter instance
     var ndx = crossfilter(europeStatsWellbeing);
 
@@ -91,7 +98,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
 	var happinessChart = dc.barChart('#happiness-chart');
-    var personalFinanceChart = dc.compositeChart('#personal-finance-chart');
+    var personalFinanceChart = dc.barChart('#personal-finance-chart');
     var neighbourhoodChart = dc.compositeChart('#neighbourhood-chart');
 
     lifeSatisfactionChart
@@ -126,96 +133,108 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.xUnits(dc.units.ordinal)
 		.yAxis().ticks(4);
 
-    $(document).ready(function()
+    function selectHappinessRating()
 	{
-		$("#select-happiness-rating").on( "change", function()
-		{
-			if ($(this).val() == "total")
-			{
-				happinessChart.group(happiness_high_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "ten")
-			{
-				happinessChart.group(happiness_happy_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "nine")
-			{
-				happinessChart.group(happiness_9_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "eight")
-			{
-				happinessChart.group(happiness_8_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "seven")
-			{
-				happinessChart.group(happiness_7_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "six")
-			{
-				happinessChart.group(happiness_6_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "five")
-			{
-				happinessChart.group(happiness_5_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "four")
-			{
-				happinessChart.group(happiness_4_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "three")
-			{
-				happinessChart.group(happiness_3_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "two")
-			{
-				happinessChart.group(happiness_2_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "one")
-			{
-				happinessChart.group(happiness_1_group);
-				dc.redrawAll();
-			}
-			else if ($(this).val() == "zero")
-			{
-				happinessChart.group(happiness_unhappy_group);
-				dc.redrawAll();
-			}
-		})
-	});
+        if ($(this).val() == "total")
+        {
+            happinessChart.group(happiness_high_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "ten")
+        {
+            happinessChart.group(happiness_happy_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "nine")
+        {
+            happinessChart.group(happiness_9_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "eight")
+        {
+            happinessChart.group(happiness_8_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "seven")
+        {
+            happinessChart.group(happiness_7_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "six")
+        {
+            happinessChart.group(happiness_6_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "five")
+        {
+            happinessChart.group(happiness_5_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "four")
+        {
+            happinessChart.group(happiness_4_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "three")
+        {
+            happinessChart.group(happiness_3_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "two")
+        {
+            happinessChart.group(happiness_2_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "one")
+        {
+            happinessChart.group(happiness_1_group);
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "zero")
+        {
+            happinessChart.group(happiness_unhappy_group);
+            dc.redrawAll();
+        }
+	}
 
    personalFinanceChart
 		.width(790)
-		.height(350)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
-		.x(d3.scale.ordinal().domain(countryDim.bottom(Infinity).map(function(d) {return d.country})))
+		.x(d3.scale.ordinal())
 		.xUnits(dc.units.ordinal)
-		.renderHorizontalGridLines(true)
-		.legend(dc.legend().x(650).y(20).itemHeight(13).gap(5))
+        .elasticY(true)
 		.brushOn(false)
-		.compose([
-			dc.lineChart(personalFinanceChart)
-				.dimension(countryDim)
-				.group(ends_meet_group, 'ends meet'),
-			dc.lineChart(personalFinanceChart)
-				.dimension(countryDim)
-				.group(risk_of_poverty_group, 'at poverty risk'),
-            dc.lineChart(personalFinanceChart)
-				.dimension(countryDim)
-				.group(job_satisfaction_group, 'job satisfaction'),
-            dc.lineChart(personalFinanceChart)
-				.dimension(countryDim)
-				.group(finances_satisfaction_group, 'finances satisfaction')
-		]);
+		.dimension(countryDim)
+		.group(job_satisfaction_group);
+
+    function selectPersonalFinance()
+	{
+        if ($(this).val() == "job-satisfaction")
+        {
+            personalFinanceChart.group(job_satisfaction_group);
+            $('#personal-finance-chart').parent().prev('div').text('Percentage of the population rating their satisfaction with their job as high - 2013');
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "finances-satisfaction")
+        {
+            personalFinanceChart.group(finances_satisfaction_group);
+            $('#personal-finance-chart').parent().prev('div').text('High satisfaction with financial situation - 2013');
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "at-poverty-risk")
+        {
+            personalFinanceChart.group(risk_of_poverty_group);
+            $('#personal-finance-chart').parent().prev('div').text('At-risk-of-poverty rate - 2015');
+            dc.redrawAll();
+        }
+        else if ($(this).val() == "ends-meet")
+        {
+            personalFinanceChart.group(ends_meet_group);
+            $('#personal-finance-chart').parent().prev('div').text('Inability to make ends meet with great difficulty or difficulty - 2015');
+            dc.redrawAll();
+        }
+	}
 
    neighbourhoodChart
 		.width(770)
