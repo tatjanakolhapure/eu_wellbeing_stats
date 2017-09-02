@@ -141,7 +141,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         if ($(this).val() == "high")
         {
             happinessChart.group(happinessHighGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as high (9 to 10 out of 10) - 2014');
+            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as high - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "ten")
