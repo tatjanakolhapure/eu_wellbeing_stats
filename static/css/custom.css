@@ -16,7 +16,8 @@
     transform: rotate(-45deg);
 }
 
-.dc-chart .axis text
+.dc-chart .axis text,
+text.y-axis-label.y-label
 {
     font: 12px sans-serif;
 }
