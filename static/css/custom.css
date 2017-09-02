@@ -26,6 +26,7 @@ text.y-axis-label.y-label
 {
     display: inline-block;
     margin-right: 20px;
+    margin-bottom: 5px;
 }
 .chart-title button
 {
