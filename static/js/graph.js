@@ -122,15 +122,17 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
     happinessChart
 		.width(600)
-		.height(250)
+		.height(200)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.brushOn(false)
 		.dimension(happinessDim)
 		.group(happiness_high_group)
+        .title(function (p){return p["key"] + ": " + p["value"] + "%";})
         .elasticY(true)
 		.transitionDuration(500)
 		.x(d3.scale.ordinal())
 		.xUnits(dc.units.ordinal)
+        .yAxisLabel("percentage %")
 		.yAxis().ticks(4);
 
     function selectHappinessRating()
@@ -138,75 +140,90 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         if ($(this).val() == "total")
         {
             happinessChart.group(happiness_high_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as high (9 to 10 out of 10) - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "ten")
         {
             happinessChart.group(happiness_happy_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as extremely happy - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "nine")
         {
             happinessChart.group(happiness_9_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 9 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "eight")
         {
             happinessChart.group(happiness_8_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 8 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "seven")
         {
             happinessChart.group(happiness_7_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 7 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "six")
         {
             happinessChart.group(happiness_6_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 6 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "five")
         {
             happinessChart.group(happiness_5_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 5 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "four")
         {
             happinessChart.group(happiness_4_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 4 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "three")
         {
             happinessChart.group(happiness_3_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 3 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "two")
         {
             happinessChart.group(happiness_2_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 2 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "one")
         {
             happinessChart.group(happiness_1_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as 1 out of 10 - 2014');
             dc.redrawAll();
         }
         else if ($(this).val() == "zero")
         {
             happinessChart.group(happiness_unhappy_group);
+            $('#happiness-chart').parent().prev('div').text('Rating of happiness as extremely unhappy - 2014');
             dc.redrawAll();
         }
 	}
 
    personalFinanceChart
 		.width(790)
-		.height(250)
+		.height(200)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal())
 		.xUnits(dc.units.ordinal)
+        .title(function (p){return p["key"] + ": " + p["value"] + "%";})
         .elasticY(true)
 		.brushOn(false)
 		.dimension(countryDim)
-		.group(job_satisfaction_group);
+		.group(job_satisfaction_group)
+        .yAxisLabel("percentage %")
+    	.yAxis().ticks(4);
 
     function selectPersonalFinance()
 	{
