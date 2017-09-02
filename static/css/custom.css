@@ -21,3 +21,14 @@ text.y-axis-label.y-label
 {
     font: 12px sans-serif;
 }
+
+.chart-title p
+{
+    display: inline-block;
+    margin-right: 20px;
+}
+.chart-title button
+{
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
