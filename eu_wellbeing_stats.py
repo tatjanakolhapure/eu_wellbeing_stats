@@ -26,15 +26,7 @@ def europe_wellbeing():
     MongoDB in JSON format.
     """
     # A constant that defines the record fields that we wish to retrieve.
-    FIELDS = {
-        '_id': False, 'country': True, 'life_satisfaction': True, 'soc_support': True,
-        'life_expectancy': True, 'good_health': True, 'unemployment_rate': True,
-        'feel_safe': True, 'life_is_worthwhile': True, 'mental_health_index': True,
-        'pers_relationships_satisfaction': True, 'job_satisfaction' : True,
-        'green_areas_satisfaction': True, 'close_to_neighbours': True,
-        'accommodation_satisfaction': True, 'risk_of_poverty': True, 'net_income': True,
-        'finances_satisfaction': True, 'ends_meet': True, 'happiness': True, 'loneliness': True
-    }
+    FIELDS = {'_id': False}
     # Open a connection to MongoDB using a with statement such that the
     # connection will be closed as soon as we exit the with statement
     with MongoClient(MONGODB_HOST, MONGODB_PORT) as conn:
