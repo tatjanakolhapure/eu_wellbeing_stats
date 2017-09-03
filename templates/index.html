@@ -35,7 +35,9 @@
             <!-- Happiness Chart -->
                 <div class="chart-wrapper">
                     <div class="chart-title">
-                        <p>Happiness by Rating</p>
+                        <p>Rating of happiness as high - 2014</p>
+                    </div>
+                    <div class="chart-title">
                         <select id="select-happiness-rating">
                             <option value="high" selected>high 9 to 10</option>
                             <option value="ten">extremely happy</option>
@@ -50,9 +52,6 @@
                             <option value="one">1</option>
                             <option value="zero">extremely unhappy</option>
                         </select>
-                    </div>
-                    <div class="chart-title">
-                        <p>Rating of happiness as high - 2014</p>
                         <button class="sort-by-country">Sort by country</button>
                         <button class="sort-by-value">Sort by value</button>
                     </div>
@@ -112,7 +111,18 @@
 			<div class="col-sm-6">
 			<!-- Life worthwhileness Chart -->
 				<div class="chart-wrapper">
-					<div class="chart-title">I strongly agree or agree what I do in life is worthwhile - 2012</div>
+                    <div class="chart-title">
+                        <p>I strongly agree or agree what I do in life is worthwhile - 2012</p>
+                    </div>
+					<div class="chart-title">
+                        <select id="select-life-worthwhileness" class="select-left">
+                            <option value="agree-or-disagree" selected>agree or strongly agree</option>
+                            <option value="strongly-agree">strongly agree</option>
+                            <option value="agree">agree</option>
+                        </select>
+                        <button class="sort-by-country">Sort by country</button>
+                        <button class="sort-by-value">Sort by value</button>
+                    </div>
 					<div class="chart-stage">
 						<div id="life-worthwhileness-chart"></div>
 					</div>
@@ -132,7 +142,18 @@
 			<div class="col-sm-6">
 			<!-- Neighbourhood Chart -->
 				<div class="chart-wrapper">
-					<div class="chart-title">Feeling close to people in the area where I live - 2012</div>
+                    <div class="chart-title">
+                        <p>Feeling close to people in the area where I live - 2012</p>
+                    </div>
+					<div class="chart-title">
+                        <select id="select-neighbourhood" class="select-left">
+                            <option value="agree-or-disagree" selected>agree or strongly agree</option>
+                            <option value="strongly-agree">strongly agree</option>
+                            <option value="agree">agree</option>
+                        </select>
+                        <button class="sort-by-country">Sort by country</button>
+                        <button class="sort-by-value">Sort by value</button>
+                    </div>
 					<div class="chart-stage">
 						<div id="neighbourhood-chart"></div>
 					</div>
