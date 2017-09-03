@@ -25,6 +25,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		{
         	d.life_is_worthwhile_agree = +d.life_is_worthwhile.agree;
         	d.life_is_worthwhile_strongly_agree = +d.life_is_worthwhile.strongly_agree;
+        	d.life_is_worthwhile_total = +(d.life_is_worthwhile_agree + d.life_is_worthwhile_strongly_agree)
 		}
         d.mental_health_index = +d.mental_health_index;
         d.pers_relationships_satisfaction = +d.pers_relationships_satisfaction;
@@ -34,6 +35,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         {
             d.close_to_neighbours_agree = +d.close_to_neighbours.agree;
             d.close_to_neighbours_strongly_agree = +d.close_to_neighbours.strongly_agree;
+            d.close_to_neighbours_total = +(d.close_to_neighbours_agree + d.close_to_neighbours_strongly_agree);
         }
         d.accommodation_satisfaction = +d.accommodation_satisfaction;
         d.risk_of_poverty = +d.risk_of_poverty;
@@ -58,11 +60,15 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         d.loneliness = +d.loneliness;
     });
 
+    //Create event listeners
     $(document).ready(function()
     {
         $("#select-happiness-rating").on( "change", selectHappinessRating);
         $("#select-personal-finance").on( "change", selectPersonalFinance);
+        $("#select-life-worthwhileness").on( "change", selectLifeWorthwhileness);
+        $("#select-neighbourhood").on( "change", selectNeighbourhood);
         $('.chart-title button').on("click", sortChart);
+
     });
 
     //Create a Crossfilter instance
@@ -73,6 +79,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var countryDim = ndx.dimension(function(d) {return d.country;});
     var happinessDim = ndx.dimension(function(d) { if (d.happiness) {return d.country;} else { return "undefined";}});
     var neighbourhoodDim = ndx.dimension(function(d) { if (d.close_to_neighbours) {return d.country;} else { return "undefined";}});
+    var lifeWorthwhilenessDim = ndx.dimension(function(d) { if (d.life_is_worthwhile) {return d.country;} else { return "undefined";}});
 
 	//Define Groups
     var lifeSatGroup = lifeSatDim.group().reduceSum(function(d) {return d.life_satisfaction;});
@@ -94,12 +101,85 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var financesSatisfactionGroup = countryDim.group().reduceSum(function(d) {return d.finances_satisfaction;});
     var closeToNeighboursAgreeGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_agree;});
     var closeToNeighboursStronglyAgreeGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_strongly_agree;});
+    var closeToNeighboursTotalGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_total;});
+    var lifeWorthwhilenessAgreeGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_agree;});
+    var lifeWorthwhilenessStronglyAgreeGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_strongly_agree;});
+    var lifeWorthwhilenessTotalGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_total;});
+
+    //Define domains for sorting charts by values
+    var jobSatisfactionByValue = [];
+    jobSatisfactionGroup.top(Infinity).forEach(function (d) {jobSatisfactionByValue.push(d.key);});
+
+    var financesSatisfactionByValue = [];
+    financesSatisfactionGroup.top(Infinity).forEach(function (d) {financesSatisfactionByValue.push(d.key);});
+
+    var riskOfPovertyByValue = [];
+    riskOfPovertyGroup.top(Infinity).forEach(function (d) {riskOfPovertyByValue.push(d.key);});
+
+    var endsMeetByValue = [];
+    endsMeetGroup.top(Infinity).forEach(function (d) {endsMeetByValue.push(d.key);});
+
+    var lifeWorthwhilenessTotalByValue = [];
+    lifeWorthwhilenessTotalGroup.top(Infinity).forEach(function (d) {lifeWorthwhilenessTotalByValue.push(d.key);});
+
+    var lifeWorthwhilenessStronglyAgreeByValue = [];
+    lifeWorthwhilenessStronglyAgreeGroup.top(Infinity).forEach(function (d) {lifeWorthwhilenessStronglyAgreeByValue.push(d.key);});
+
+    var lifeWorthwhilenessAgreeByValue = [];
+    lifeWorthwhilenessAgreeGroup.top(Infinity).forEach(function (d) {lifeWorthwhilenessAgreeByValue.push(d.key);});
+
+    var closeToNeighboursTotalByValue = [];
+    closeToNeighboursTotalGroup.top(Infinity).forEach(function (d) {closeToNeighboursTotalByValue.push(d.key);});
+
+    var closeToNeighboursStronglyAgreeByValue = [];
+    closeToNeighboursStronglyAgreeGroup.top(Infinity).forEach(function (d) {closeToNeighboursStronglyAgreeByValue.push(d.key);});
+
+    var closeToNeighboursAgreeByValue = [];
+    closeToNeighboursAgreeGroup.top(Infinity).forEach(function (d) {closeToNeighboursAgreeByValue.push(d.key);});
+
+    var happinessHighByValue = [];
+    happinessHighGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessHighByValue.push(d.key)}});
+
+    var happinessHappyByValue = [];
+    happinessHappyGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessHappyByValue.push(d.key)}});
+
+    var happinessNineByValue = [];
+    happinessNineGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessNineByValue.push(d.key)}});
+
+    var happinessSevenByValue = [];
+    happinessSevenGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessSevenByValue.push(d.key)}});
+
+    var happinessEightByValue = [];
+    happinessEightGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessEightByValue.push(d.key)}});
+
+    var happinessSixByValue = [];
+    happinessSixGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessSixByValue.push(d.key)}});
+
+    var happinessFiveByValue = [];
+    happinessFiveGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessFiveByValue.push(d.key)}});
+
+    var happinessFourByValue = [];
+    happinessFourGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessFourByValue.push(d.key)}});
+
+    var happinessThreeByValue = [];
+    happinessThreeGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessThreeByValue.push(d.key)}});
+
+    var happinessTwoByValue = [];
+    happinessTwoGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessTwoByValue.push(d.key)}});
+
+    var happinessOneByValue = [];
+    happinessOneGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessOneByValue.push(d.key)}});
+
+    var happinessUnhappyByValue = [];
+    happinessUnhappyGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessUnhappyByValue.push(d.key)}});
 
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
 	var happinessChart = dc.barChart('#happiness-chart');
     var personalFinanceChart = dc.barChart('#personal-finance-chart');
-    var neighbourhoodChart = dc.compositeChart('#neighbourhood-chart');
+    var neighbourhoodChart = dc.barChart('#neighbourhood-chart');
+    var lifeWorthwhilenessChart = dc.barChart('#life-worthwhileness-chart');
+
 
     lifeSatisfactionChart
 		.width(570)
@@ -130,81 +210,85 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
         .elasticY(true)
 		.transitionDuration(500)
-		.x(d3.scale.ordinal())
+		.x(d3.scale.ordinal().domain(happinessHighByValue))
 		.xUnits(dc.units.ordinal)
         .transitionDuration(800)
         .yAxisLabel("percentage %")
 		.yAxis().ticks(4);
 
+
     function selectHappinessRating()
 	{
-        if ($(this).val() == "high")
+        var chartTitle = $('#happiness-chart').parent().prev('div').prev('div').children('p');
+
+	    if ($(this).val() == "high")
         {
-            happinessChart.group(happinessHighGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as high - 2014');
+            happinessChart.group(happinessHighGroup).x(d3.scale.ordinal().domain(happinessHighByValue)).render();
+            chartTitle.text('Rating of happiness as high - 2014');
         }
         else if ($(this).val() == "ten")
         {
-            happinessChart.group(happinessHappyGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as extremely happy - 2014');
+            happinessChart.group(happinessHappyGroup).x(d3.scale.ordinal().domain(happinessHappyByValue)).render();
+            chartTitle.text('Rating of happiness as extremely happy - 2014');
         }
         else if ($(this).val() == "nine")
         {
-            happinessChart.group(happinessNineGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 9 out of 10 - 2014');
+            happinessChart.group(happinessNineGroup).x(d3.scale.ordinal().domain(happinessNineByValue)).render();
+            chartTitle.text('Rating of happiness as 9 out of 10 - 2014');
         }
         else if ($(this).val() == "eight")
         {
-            happinessChart.group(happinessEightGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 8 out of 10 - 2014');
+            happinessChart.group(happinessEightGroup).x(d3.scale.ordinal().domain(happinessEightByValue)).render();
+            chartTitle.text('Rating of happiness as 8 out of 10 - 2014');
         }
         else if ($(this).val() == "seven")
         {
-            happinessChart.group(happinessSevenGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 7 out of 10 - 2014');
+            happinessChart.group(happinessSevenGroup).x(d3.scale.ordinal().domain(happinessSevenByValue)).render();
+            chartTitle.text('Rating of happiness as 7 out of 10 - 2014');
         }
         else if ($(this).val() == "six")
         {
-            happinessChart.group(happinessSixGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 6 out of 10 - 2014');
+            happinessChart.group(happinessSixGroup).x(d3.scale.ordinal().domain(happinessSixByValue)).render();
+            chartTitle.text('Rating of happiness as 6 out of 10 - 2014');
         }
         else if ($(this).val() == "five")
         {
-            happinessChart.group(happinessFiveGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 5 out of 10 - 2014');
+            happinessChart.group(happinessFiveGroup).x(d3.scale.ordinal().domain(happinessFiveByValue)).render();
+            chartTitle.text('Rating of happiness as 5 out of 10 - 2014');
         }
         else if ($(this).val() == "four")
         {
-            happinessChart.group(happinessFourGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 4 out of 10 - 2014');
+            happinessChart.group(happinessFourGroup).x(d3.scale.ordinal().domain(happinessFourByValue)).render();
+            chartTitle.text('Rating of happiness as 4 out of 10 - 2014');
         }
         else if ($(this).val() == "three")
         {
-            happinessChart.group(happinessThreeGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 3 out of 10 - 2014');
+            happinessChart.group(happinessThreeGroup).x(d3.scale.ordinal().domain(happinessThreeByValue)).render();
+            chartTitle.text('Rating of happiness as 3 out of 10 - 2014');
         }
         else if ($(this).val() == "two")
         {
-            happinessChart.group(happinessTwoGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 2 out of 10 - 2014');
+            happinessChart.group(happinessTwoGroup).x(d3.scale.ordinal().domain(happinessTwoByValue)).render();
+            chartTitle.text('Rating of happiness as 2 out of 10 - 2014');
         }
         else if ($(this).val() == "one")
         {
-            happinessChart.group(happinessOneGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as 1 out of 10 - 2014');
+            happinessChart.group(happinessOneGroup).x(d3.scale.ordinal().domain(happinessOneByValue)).render();
+            chartTitle.text('Rating of happiness as 1 out of 10 - 2014');
         }
         else if ($(this).val() == "zero")
         {
-            happinessChart.group(happinessUnhappyGroup).x(d3.scale.ordinal()).render();
-            $('#happiness-chart').parent().prev('div').children('p').text('Rating of happiness as extremely unhappy - 2014');
+            happinessChart.group(happinessUnhappyGroup).x(d3.scale.ordinal().domain(happinessUnhappyByValue)).render();
+            chartTitle.text('Rating of happiness as extremely unhappy - 2014');
         }
 	}
 
-   personalFinanceChart
+
+	personalFinanceChart
 		.width(790)
 		.height(200)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
-		.x(d3.scale.ordinal())
+		.x(d3.scale.ordinal().domain(jobSatisfactionByValue))
 		.xUnits(dc.units.ordinal)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
         .elasticY(true)
@@ -215,185 +299,188 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         .yAxisLabel("percentage %")
     	.yAxis().ticks(4);
 
+
     function selectPersonalFinance()
 	{
-        if ($(this).val() == "job-satisfaction")
+        var chartTitle = $('#personal-finance-chart').parent().prev('div').children('p');
+
+	    if ($(this).val() == "job-satisfaction")
         {
-            personalFinanceChart.group(jobSatisfactionGroup).x(d3.scale.ordinal()).render();
-            $('#personal-finance-chart').parent().prev('div').children('p').text('Percentage of the population rating their satisfaction with their job as high - 2013');
+            personalFinanceChart.group(jobSatisfactionGroup).x(d3.scale.ordinal().domain(jobSatisfactionByValue)).render();
+            chartTitle.text('Percentage of the population rating their satisfaction with their job as high - 2013');
         }
         else if ($(this).val() == "finances-satisfaction")
         {
-            personalFinanceChart.group(financesSatisfactionGroup).x(d3.scale.ordinal()).render();
-            $('#personal-finance-chart').parent().prev('div').children('p').text('High satisfaction with financial situation - 2013');
+            personalFinanceChart.group(financesSatisfactionGroup).x(d3.scale.ordinal().domain(financesSatisfactionByValue)).render();
+            chartTitle.text('High satisfaction with financial situation - 2013');
         }
         else if ($(this).val() == "at-poverty-risk")
         {
-            personalFinanceChart.group(riskOfPovertyGroup).x(d3.scale.ordinal()).render();
-            $('#personal-finance-chart').parent().prev('div').children('p').text('At-risk-of-poverty rate - 2015');
+            personalFinanceChart.group(riskOfPovertyGroup).x(d3.scale.ordinal().domain(riskOfPovertyByValue)).render();
+            chartTitle.text('At-risk-of-poverty rate - 2015');
         }
         else if ($(this).val() == "ends-meet")
         {
-            personalFinanceChart.group(endsMeetGroup).x(d3.scale.ordinal()).render();
-            $('#personal-finance-chart').parent().prev('div').children('p').text('Inability to make ends meet with great difficulty or difficulty - 2015');
+            personalFinanceChart.group(endsMeetGroup).x(d3.scale.ordinal().domain(endsMeetByValue)).render();
+            chartTitle.text('Inability to make ends meet with great difficulty or difficulty - 2015');
         }
 	}
 
-   neighbourhoodChart
+
+	lifeWorthwhilenessChart
 		.width(770)
-		.height(350)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
-		.x(d3.scale.ordinal().domain(neighbourhoodDim.bottom(Infinity).map(function(d) {if (d.close_to_neighbours) {return d.country} else {return "undefined"}})))
+		.x(d3.scale.ordinal().domain(lifeWorthwhilenessTotalByValue))
 		.xUnits(dc.units.ordinal)
-		.renderHorizontalGridLines(true)
-		.legend(dc.legend().x(670).y(20).itemHeight(13).gap(5))
 		.brushOn(false)
-		.compose([
-			dc.lineChart(neighbourhoodChart)
-				.dimension(neighbourhoodDim)
-				.group(closeToNeighboursAgreeGroup, 'agree')
-				.defined(function(d) { return !isNaN(d.y)}),
-			dc.lineChart(neighbourhoodChart)
-				.dimension(neighbourhoodDim)
-				.group(closeToNeighboursStronglyAgreeGroup, 'strongly agree')
-				.defined(function(d) { return !isNaN(d.y)})
-		]);
+        .elasticY(true)
+        .title(function (p){return p["key"] + ": " + p["value"] + "%";})
+		.dimension(lifeWorthwhilenessDim)
+		.group(lifeWorthwhilenessAgreeGroup)
+		.stack(lifeWorthwhilenessStronglyAgreeGroup)
+        .transitionDuration(800)
+        .yAxisLabel("percentage %")
+    	.yAxis().ticks(4);
+
+
+    function selectLifeWorthwhileness()
+	{
+        var chartTitle = $('#life-worthwhileness-chart').parent().prev('div').prev('div').children('p');
+
+	    if ($(this).val() == "agree-or-disagree")
+        {
+            lifeWorthwhilenessChart
+                .group(lifeWorthwhilenessAgreeGroup)
+                .stack(lifeWorthwhilenessStronglyAgreeGroup)
+                .x(d3.scale.ordinal().domain(lifeWorthwhilenessTotalByValue))
+                .render();
+            chartTitle.text('I strongly agree or agree what I do in life is worthwhile - 2012');
+        }
+        else if ($(this).val() == "strongly-agree")
+        {
+            lifeWorthwhilenessChart.group(lifeWorthwhilenessStronglyAgreeGroup).x(d3.scale.ordinal().domain(lifeWorthwhilenessStronglyAgreeByValue)).render();
+            chartTitle.text('I strongly agree what I do in life is worthwhile - 2012');
+        }
+        else if ($(this).val() == "agree")
+        {
+            lifeWorthwhilenessChart.group(lifeWorthwhilenessAgreeGroup).x(d3.scale.ordinal().domain(lifeWorthwhilenessAgreeByValue)).render();
+            chartTitle.text('I agree what I do in life is worthwhile - 2012');
+        }
+	}
+
+
+    neighbourhoodChart
+		.width(770)
+		.height(250)
+		.margins({top: 10, right: 50, bottom: 75, left: 50})
+		.x(d3.scale.ordinal().domain(closeToNeighboursTotalByValue))
+		.xUnits(dc.units.ordinal)
+		.brushOn(false)
+        .elasticY(true)
+        .title(function (p){return p["key"] + ": " + p["value"] + "%";})
+		.dimension(neighbourhoodDim)
+		.group(closeToNeighboursAgreeGroup)
+		.stack(closeToNeighboursStronglyAgreeGroup)
+        .transitionDuration(800)
+        .yAxisLabel("percentage %")
+    	.yAxis().ticks(4);
+
+
+    function selectNeighbourhood()
+	{
+        var chartTitle = $('#neighbourhood-chart').parent().prev('div').prev('div').children('p');
+
+	    if ($(this).val() == "agree-or-disagree")
+        {
+            neighbourhoodChart
+                .group(closeToNeighboursAgreeGroup)
+                .stack(closeToNeighboursStronglyAgreeGroup)
+                .x(d3.scale.ordinal().domain(closeToNeighboursTotalByValue))
+                .render();
+            chartTitle.text('Feeling close to people in the area where I live - 2012');
+        }
+        else if ($(this).val() == "strongly-agree")
+        {
+            neighbourhoodChart.group(closeToNeighboursStronglyAgreeGroup).x(d3.scale.ordinal().domain(closeToNeighboursStronglyAgreeByValue)).render();
+            chartTitle.text('I strongly agree that I feel close to people in the area where I live - 2012');
+        }
+        else if ($(this).val() == "agree")
+        {
+            neighbourhoodChart.group(closeToNeighboursAgreeGroup).x(d3.scale.ordinal().domain(closeToNeighboursAgreeByValue)).render();
+            chartTitle.text('I agree that I feel close to people in the area where I live - 2012');
+        }
+	}
+
 
     function sortChart() {
         if ($(this).parent().next('div').children().attr('id') == "personal-finance-chart") {
-
             var SelectedOptionPersonalFinance = $('select#select-personal-finance option:checked');
-
             if ($(this).hasClass('sort-by-value')) {
-
                 if (SelectedOptionPersonalFinance.val() == "job-satisfaction") {
-                    var jobSatisfactionByValue = [];
-                    jobSatisfactionGroup.top(Infinity).forEach(function (d) { jobSatisfactionByValue.push(d.key); });
                     personalFinanceChart.x(d3.scale.ordinal().domain(jobSatisfactionByValue)).render();
                 }
-
                 else if (SelectedOptionPersonalFinance.val() == "finances-satisfaction") {
-                    var financesSatisfactionByValue = [];
-                    financesSatisfactionGroup.top(Infinity).forEach(function (d) { financesSatisfactionByValue.push(d.key); });
                     personalFinanceChart.x(d3.scale.ordinal().domain(financesSatisfactionByValue)).render();
                 }
-
                 else if (SelectedOptionPersonalFinance.val() == "at-poverty-risk") {
-                    var riskOfPovertyByValue = [];
-                    riskOfPovertyGroup.top(Infinity).forEach(function (d) { riskOfPovertyByValue.push(d.key); });
                     personalFinanceChart.x(d3.scale.ordinal().domain(riskOfPovertyByValue)).render();
                 }
-
                 else if (SelectedOptionPersonalFinance.val() == "ends-meet") {
-                    var endsMeetByValue = [];
-                    endsMeetGroup.top(Infinity).forEach(function (d) { endsMeetByValue.push(d.key); });
                     personalFinanceChart.x(d3.scale.ordinal().domain(endsMeetByValue)).render();
                 }
-
             }
             else if ($(this).hasClass('sort-by-country')) {
-
                 personalFinanceChart.x(d3.scale.ordinal()).render();
             }
         }
 
         if ($(this).parent().next('div').children().attr('id') == "happiness-chart") {
-
             var selectedOptionHappiness = $('select#select-happiness-rating option:checked');
-
             if ($(this).hasClass('sort-by-value')) {
-
                 if (selectedOptionHappiness.val() == "high") {
-                    var happinessHighByValue = [];
-                    happinessHighGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessHighByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessHighByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "ten") {
-                    var happinessHappyByValue = [];
-                    happinessHappyGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessHappyByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessHappyByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "nine") {
-                    var happinessNineByValue = [];
-                    happinessNineGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessNineByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessNineByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "eight") {
-                    var happinessEightByValue = [];
-                    happinessEightGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessEightByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessEightByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "seven") {
-                    var happinessSevenByValue = [];
-                    happinessSevenGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessSevenByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessSevenByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "six") {
-                    var happinessSixByValue = [];
-                    happinessSixGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessSixByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessSixByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "five") {
-                    var happinessFiveByValue = [];
-                    happinessFiveGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessFiveByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessFiveByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "four") {
-                    var happinessFourByValue = [];
-                    happinessFourGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessFourByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessFourByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "three") {
-                    var happinessThreeByValue = [];
-                    happinessThreeGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessThreeByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessThreeByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "two") {
-                    var happinessTwoByValue = [];
-                    happinessTwoGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessTwoByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessTwoByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "one") {
-                    var happinessOneByValue = [];
-                    happinessOneGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessOneByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessOneByValue)).render();
                 }
-
                 else if (selectedOptionHappiness.val() == "zero") {
-                    var happinessUnhappyByValue = [];
-                    happinessUnhappyGroup.top(Infinity).forEach(function (d) {
-                        if (!isNaN(d.value)) {happinessUnhappyByValue.push(d.key)}});
                     happinessChart.x(d3.scale.ordinal().domain(happinessUnhappyByValue)).render();
                 }
-
             }
             else if ($(this).hasClass('sort-by-country')) {
-
                 happinessChart.x(d3.scale.ordinal()).render();
             }
         }
     }
+
 
     dc.renderAll();
 
