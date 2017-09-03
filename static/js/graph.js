@@ -348,7 +348,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 	{
         var chartTitle = $('#life-worthwhileness-chart').parent().prev('div').prev('div').children('p');
 
-	    if ($(this).val() == "agree-or-disagree")
+	    if ($(this).val() == "agree-or-strongly-agree")
         {
             lifeWorthwhilenessChart
                 .group(lifeWorthwhilenessAgreeGroup)
@@ -391,7 +391,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 	{
         var chartTitle = $('#neighbourhood-chart').parent().prev('div').prev('div').children('p');
 
-	    if ($(this).val() == "agree-or-disagree")
+	    if ($(this).val() == "agree-or-strongly-agree")
         {
             neighbourhoodChart
                 .group(closeToNeighboursAgreeGroup)
@@ -414,6 +414,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
     function sortChart() {
+
         if ($(this).parent().next('div').children().attr('id') == "personal-finance-chart") {
             var SelectedOptionPersonalFinance = $('select#select-personal-finance option:checked');
             if ($(this).hasClass('sort-by-value')) {
@@ -477,6 +478,42 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
             }
             else if ($(this).hasClass('sort-by-country')) {
                 happinessChart.x(d3.scale.ordinal()).render();
+            }
+        }
+
+         if ($(this).parent().next('div').children().attr('id') == "life-worthwhileness-chart") {
+            var SelectedOptionLifeWorthwhileness = $('select#select-life-worthwhileness option:checked');
+            if ($(this).hasClass('sort-by-value')) {
+                if (SelectedOptionLifeWorthwhileness.val() == "agree-or-strongly-agree") {
+                    lifeWorthwhilenessChart.x(d3.scale.ordinal().domain(lifeWorthwhilenessTotalByValue)).render();
+                }
+                else if (SelectedOptionLifeWorthwhileness.val() == "strongly-agree") {
+                    lifeWorthwhilenessChart.x(d3.scale.ordinal().domain(lifeWorthwhilenessStronglyAgreeByValue)).render();
+                }
+                else if (SelectedOptionLifeWorthwhileness.val() == "agree") {
+                    lifeWorthwhilenessChart.x(d3.scale.ordinal().domain(lifeWorthwhilenessAgreeByValue)).render();
+                }
+            }
+            else if ($(this).hasClass('sort-by-country')) {
+                lifeWorthwhilenessChart.x(d3.scale.ordinal()).render();
+            }
+        }
+
+        if ($(this).parent().next('div').children().attr('id') == "neighbourhood-chart") {
+            var SelectedOptionNeighbourhood = $('select#select-neighbourhood option:checked');
+            if ($(this).hasClass('sort-by-value')) {
+                if (SelectedOptionNeighbourhood.val() == "agree-or-strongly-agree") {
+                    neighbourhoodChart.x(d3.scale.ordinal().domain(closeToNeighboursTotalByValue)).render();
+                }
+                else if (SelectedOptionNeighbourhood.val() == "strongly-agree") {
+                    neighbourhoodChart.x(d3.scale.ordinal().domain(closeToNeighboursStronglyAgreeByValue)).render();
+                }
+                else if (SelectedOptionNeighbourhood.val() == "agree") {
+                    neighbourhoodChart.x(d3.scale.ordinal().domain(closeToNeighboursAgreeByValue)).render();
+                }
+            }
+            else if ($(this).hasClass('sort-by-country')) {
+                neighbourhoodChart.x(d3.scale.ordinal()).render();
             }
         }
     }
