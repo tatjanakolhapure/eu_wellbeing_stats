@@ -17,9 +17,11 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     europeStatsWellbeing.forEach(function (d) {
         d.life_satisfaction = +d.life_satisfaction;
         d.soc_support = +d.soc_support;
-        d.life_expectancy = +d.life_expectancy;
+        d.life_expectancy_both = +d.life_expectancy.both;
+        d.life_expectancy_female = +d.life_expectancy.female;
+        d.life_expectancy_male = +d.life_expectancy.male;
         if (d.good_health) {d.good_health = +d.good_health;}
-        d.unemployment_rate = +d.unemployment_rate;
+        if(d.unemployment_rate) {d.unemployment_rate = +d.unemployment_rate;}
         d.feel_safe = +d.feel_safe;
         if (d.life_is_worthwhile)
 		{
@@ -83,6 +85,8 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var goodHealthDim = ndx.dimension(function(d) { if (d.good_health) {return d.country;} else { return "undefined";}});
     var mentalHealthDim = ndx.dimension(function(d) { if (d.mental_health_index) {return d.country;} else { return "undefined";}});
     var netIncomeDim = ndx.dimension(function(d) {return d.country;});
+    var unemploymentDim = ndx.dimension(function(d) { if (d.unemployment_rate) {return d.country;} else { return "undefined";}});
+
 
     //Get top 10 values for row charts
     function getTops(source_group) {
@@ -93,34 +97,65 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         };
     }
 
+    function remove_empty_bins(source_group) {
+        return {
+            all:function () {
+                return source_group.all().filter(function(d) {
+                    return !isNaN(d.value);
+                });
+            }
+        };
+    }
+
 	//Define Groups
     var lifeSatGroup = lifeSatDim.group().reduceSum(function(d) {return d.life_satisfaction;});
     var happinessUnhappyGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_extremely_unhappy;});
+    var happinessUnhappyGroupFiltered = remove_empty_bins(happinessUnhappyGroup);
     var happinessOneGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_1;});
+    var happinessOneGroupFiltered = remove_empty_bins(happinessOneGroup);
     var happinessTwoGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_2;});
+    var happinessTwoGroupFiltered = remove_empty_bins(happinessTwoGroup);
     var happinessThreeGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_3;});
+    var happinessThreeGroupFiltered = remove_empty_bins(happinessThreeGroup);
     var happinessFourGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_4;});
+    var happinessFourGroupFiltered = remove_empty_bins(happinessFourGroup);
     var happinessFiveGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_5;});
+    var happinessFiveGroupFiltered = remove_empty_bins(happinessFiveGroup);
     var happinessSixGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_6;});
+    var happinessSixGroupFiltered = remove_empty_bins(happinessSixGroup);
     var happinessSevenGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_7;});
+    var happinessSevenGroupFiltered = remove_empty_bins(happinessSevenGroup);
     var happinessEightGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_8;});
+    var happinessEightGroupFiltered = remove_empty_bins(happinessEightGroup);
     var happinessNineGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_9;});
+    var happinessNineGroupFiltered = remove_empty_bins(happinessNineGroup);
     var happinessHappyGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_happy;});
+    var happinessHappyGroupFiltered = remove_empty_bins(happinessHappyGroup);
     var happinessHighGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_high;});
+    var happinessHighGroupFiltered = remove_empty_bins(happinessHighGroup);
+
     var endsMeetGroup = personalFinanceDim.group().reduceSum(function(d) {return d.ends_meet;});
     var riskOfPovertyGroup = personalFinanceDim.group().reduceSum(function(d) {return d.risk_of_poverty;});
     var jobSatisfactionGroup = personalFinanceDim.group().reduceSum(function(d) {return d.job_satisfaction;});
     var financesSatisfactionGroup = personalFinanceDim.group().reduceSum(function(d) {return d.finances_satisfaction;});
     var closeToNeighboursAgreeGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_agree;});
+    var closeToNeighboursAgreeGroupFiltered = remove_empty_bins(closeToNeighboursAgreeGroup);
     var closeToNeighboursStronglyAgreeGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_strongly_agree;});
+    var closeToNeighboursStronglyAgreeGroupFiltered = remove_empty_bins(closeToNeighboursStronglyAgreeGroup);
     var closeToNeighboursTotalGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_total;});
+    var closeToNeighboursTotalGroupFiltered = remove_empty_bins(closeToNeighboursTotalGroup);
     var lifeWorthwhilenessAgreeGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_agree;});
+    var lifeWorthwhilenessAgreeGroupFiltered = remove_empty_bins(lifeWorthwhilenessAgreeGroup);
     var lifeWorthwhilenessStronglyAgreeGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_strongly_agree;});
+    var lifeWorthwhilenessStronglyAgreeGroupFiltered = remove_empty_bins(lifeWorthwhilenessStronglyAgreeGroup);
     var lifeWorthwhilenessTotalGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_total;});
+    var lifeWorthwhilenessTotalGroupFiltered = remove_empty_bins(lifeWorthwhilenessTotalGroup);
     var goodHealthGroup = goodHealthDim.group().reduceSum(function(d) {return d.good_health;});
     var mentalHealthGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_index;});
     var netIncomeGroup = netIncomeDim.group().reduceSum(function(d) {return d.net_income;});
     var netIncomeGroupTop = getTops(netIncomeGroup);
+    var unemploymentGroup = unemploymentDim.group().reduceSum(function(d) {return d.unemployment_rate;});
+    var unemploymentGroupTop = getTops(unemploymentGroup);
 
     //Define domains for sorting charts by values
     var jobSatisfactionByValue = [];
@@ -136,22 +171,22 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     endsMeetGroup.top(Infinity).forEach(function (d) {endsMeetByValue.push(d.key);});
 
     var lifeWorthwhilenessTotalByValue = [];
-    lifeWorthwhilenessTotalGroup.top(Infinity).forEach(function (d) {lifeWorthwhilenessTotalByValue.push(d.key);});
+    lifeWorthwhilenessTotalGroup.top(Infinity).forEach(function (d) { if (!isNaN(d.value)) {lifeWorthwhilenessTotalByValue.push(d.key);}});
 
     var lifeWorthwhilenessStronglyAgreeByValue = [];
-    lifeWorthwhilenessStronglyAgreeGroup.top(Infinity).forEach(function (d) {lifeWorthwhilenessStronglyAgreeByValue.push(d.key);});
+    lifeWorthwhilenessStronglyAgreeGroup.top(Infinity).forEach(function (d) { if (!isNaN(d.value)) {lifeWorthwhilenessStronglyAgreeByValue.push(d.key);}});
 
     var lifeWorthwhilenessAgreeByValue = [];
-    lifeWorthwhilenessAgreeGroup.top(Infinity).forEach(function (d) {lifeWorthwhilenessAgreeByValue.push(d.key);});
+    lifeWorthwhilenessAgreeGroup.top(Infinity).forEach(function (d) { if (!isNaN(d.value)) {lifeWorthwhilenessAgreeByValue.push(d.key);}});
 
     var closeToNeighboursTotalByValue = [];
-    closeToNeighboursTotalGroup.top(Infinity).forEach(function (d) {closeToNeighboursTotalByValue.push(d.key);});
+    closeToNeighboursTotalGroup.top(Infinity).forEach(function (d) { if (!isNaN(d.value)) {closeToNeighboursTotalByValue.push(d.key);}});
 
     var closeToNeighboursStronglyAgreeByValue = [];
-    closeToNeighboursStronglyAgreeGroup.top(Infinity).forEach(function (d) {closeToNeighboursStronglyAgreeByValue.push(d.key);});
+    closeToNeighboursStronglyAgreeGroup.top(Infinity).forEach(function (d) { if (!isNaN(d.value)) {closeToNeighboursStronglyAgreeByValue.push(d.key);}});
 
     var closeToNeighboursAgreeByValue = [];
-    closeToNeighboursAgreeGroup.top(Infinity).forEach(function (d) {closeToNeighboursAgreeByValue.push(d.key);});
+    closeToNeighboursAgreeGroup.top(Infinity).forEach(function (d) { if (!isNaN(d.value)) {closeToNeighboursAgreeByValue.push(d.key);}});
 
     var happinessHighByValue = [];
     happinessHighGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessHighByValue.push(d.key)}});
@@ -197,6 +232,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var lifeWorthwhilenessChart = dc.barChart('#life-worthwhileness-chart');
     var healthChart = dc.lineChart('#health-chart');
     var netIncomeChart = dc.rowChart('#net-income-chart');
+    var unemploymentChart = dc.rowChart('#unemployment-rate-chart');
 
 
     lifeSatisfactionChart
@@ -224,7 +260,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.brushOn(false)
 		.dimension(happinessDim)
-		.group(happinessHighGroup)
+		.group(happinessHighGroupFiltered)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
         .elasticY(true)
 		.transitionDuration(500)
@@ -313,6 +349,16 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.ordering(function(d) { return -d.value })
         .xAxis().ticks(4);
 
+    unemploymentChart
+    	.width(300).height(300)
+		.margins({top: 20, left: 10, right: 10, bottom: 33})
+		.gap(2)
+		.elasticX(true)
+		.dimension(unemploymentDim)
+		.group(unemploymentGroupTop)
+        .title(function (p){return p["key"] + ": " + p["value"] + "%";})
+		.ordering(function(d) { return -d.value })
+        .xAxis().ticks(4);
 
 	personalFinanceChart
 		.width(790)
@@ -367,8 +413,8 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         .elasticY(true)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
 		.dimension(lifeWorthwhilenessDim)
-		.group(lifeWorthwhilenessAgreeGroup)
-		.stack(lifeWorthwhilenessStronglyAgreeGroup)
+		.group(lifeWorthwhilenessAgreeGroupFiltered)
+		.stack(lifeWorthwhilenessStronglyAgreeGroupFiltered)
         .transitionDuration(800)
         .yAxisLabel("percentage %")
     	.yAxis().ticks(4);
@@ -410,8 +456,8 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         .elasticY(true)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
 		.dimension(neighbourhoodDim)
-		.group(closeToNeighboursAgreeGroup)
-		.stack(closeToNeighboursStronglyAgreeGroup)
+		.group(closeToNeighboursAgreeGroupFiltered)
+		.stack(closeToNeighboursStronglyAgreeGroupFiltered)
         .transitionDuration(800)
         .yAxisLabel("percentage %")
     	.yAxis().ticks(4);
@@ -489,44 +535,79 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
             var selectedOptionHappiness = $('select#select-happiness-rating option:checked');
             if ($(this).hasClass('sort-by-value')) {
                 if (selectedOptionHappiness.val() == "high") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessHighByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessHighByValue)).group(happinessHighGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "ten") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessHappyByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessHappyByValue)).group(happinessHappyGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "nine") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessNineByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessNineByValue)).group(happinessNineGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "eight") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessEightByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessEightByValue)).group(happinessEightGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "seven") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessSevenByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessSevenByValue)).group(happinessSevenGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "six") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessSixByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessSixByValue)).group(happinessSixGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "five") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessFiveByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessFiveByValue)).group(happinessFiveGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "four") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessFourByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessFourByValue)).group(happinessFourGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "three") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessThreeByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessThreeByValue)).group(happinessThreeGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "two") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessTwoByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessTwoByValue)).group(happinessTwoGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "one") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessOneByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessOneByValue)).group(happinessOneGroup).render();
                 }
                 else if (selectedOptionHappiness.val() == "zero") {
-                    happinessChart.x(d3.scale.ordinal().domain(happinessUnhappyByValue)).render();
+                    happinessChart.x(d3.scale.ordinal().domain(happinessUnhappyByValue)).group(happinessUnhappyGroup).render();
                 }
             }
             else if ($(this).hasClass('sort-by-country')) {
-                happinessChart.x(d3.scale.ordinal()).render();
+                if (selectedOptionHappiness.val() == "high") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessHighGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "ten") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessHappyGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "nine") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessNineGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "eight") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessEightGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "seven") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessSevenGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "six") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessSixGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "five") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessFiveGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "four") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessFourGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "three") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessThreeGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "two") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessTwoGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "one") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessOneGroupFiltered).render();
+                }
+                else if (selectedOptionHappiness.val() == "zero") {
+                    happinessChart.x(d3.scale.ordinal()).group(happinessUnhappyGroupFiltered).render();
+                }
             }
         }
 
@@ -534,17 +615,39 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
             var SelectedOptionLifeWorthwhileness = $('select#select-life-worthwhileness option:checked');
             if ($(this).hasClass('sort-by-value')) {
                 if (SelectedOptionLifeWorthwhileness.val() == "agree-or-strongly-agree") {
-                    lifeWorthwhilenessChart.x(d3.scale.ordinal().domain(lifeWorthwhilenessTotalByValue)).render();
+                    lifeWorthwhilenessChart
+                        .x(d3.scale.ordinal().domain(lifeWorthwhilenessTotalByValue))
+                        .group(lifeWorthwhilenessAgreeGroup)
+                        .stack(lifeWorthwhilenessStronglyAgreeGroup)
+                        .render();
                 }
                 else if (SelectedOptionLifeWorthwhileness.val() == "strongly-agree") {
-                    lifeWorthwhilenessChart.x(d3.scale.ordinal().domain(lifeWorthwhilenessStronglyAgreeByValue)).render();
+                    lifeWorthwhilenessChart
+                        .x(d3.scale.ordinal().domain(lifeWorthwhilenessStronglyAgreeByValue))
+                        .group(lifeWorthwhilenessStronglyAgreeGroup)
+                        .render();
                 }
                 else if (SelectedOptionLifeWorthwhileness.val() == "agree") {
-                    lifeWorthwhilenessChart.x(d3.scale.ordinal().domain(lifeWorthwhilenessAgreeByValue)).render();
+                    lifeWorthwhilenessChart
+                        .x(d3.scale.ordinal().domain(lifeWorthwhilenessAgreeByValue))
+                        .group(lifeWorthwhilenessAgreeGroup)
+                        .render();
                 }
             }
             else if ($(this).hasClass('sort-by-country')) {
-                lifeWorthwhilenessChart.x(d3.scale.ordinal()).render();
+                if (SelectedOptionLifeWorthwhileness.val() == "agree-or-strongly-agree") {
+                    lifeWorthwhilenessChart
+                        .x(d3.scale.ordinal())
+                        .group(lifeWorthwhilenessAgreeGroupFiltered)
+                        .stack(lifeWorthwhilenessStronglyAgreeGroupFiltered)
+                        .render();
+                }
+                else if (SelectedOptionLifeWorthwhileness.val() == "strongly-agree") {
+                    lifeWorthwhilenessChart.x(d3.scale.ordinal()).group(lifeWorthwhilenessStronglyAgreeGroupFiltered).render();
+                }
+                else if (SelectedOptionLifeWorthwhileness.val() == "agree") {
+                    lifeWorthwhilenessChart.x(d3.scale.ordinal()).group(lifeWorthwhilenessAgreeGroupFiltered).render();
+                }
             }
         }
 
@@ -552,17 +655,39 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
             var SelectedOptionNeighbourhood = $('select#select-neighbourhood option:checked');
             if ($(this).hasClass('sort-by-value')) {
                 if (SelectedOptionNeighbourhood.val() == "agree-or-strongly-agree") {
-                    neighbourhoodChart.x(d3.scale.ordinal().domain(closeToNeighboursTotalByValue)).render();
+                    neighbourhoodChart
+                        .x(d3.scale.ordinal().domain(closeToNeighboursTotalByValue))
+                        .group(closeToNeighboursAgreeGroup)
+                        .stack(closeToNeighboursStronglyAgreeGroup)
+                        .render();
                 }
                 else if (SelectedOptionNeighbourhood.val() == "strongly-agree") {
-                    neighbourhoodChart.x(d3.scale.ordinal().domain(closeToNeighboursStronglyAgreeByValue)).render();
+                    neighbourhoodChart
+                        .x(d3.scale.ordinal().domain(closeToNeighboursStronglyAgreeByValue))
+                        .group(closeToNeighboursStronglyAgreeGroup)
+                        .render();
                 }
                 else if (SelectedOptionNeighbourhood.val() == "agree") {
-                    neighbourhoodChart.x(d3.scale.ordinal().domain(closeToNeighboursAgreeByValue)).render();
+                    neighbourhoodChart
+                        .x(d3.scale.ordinal().domain(closeToNeighboursAgreeByValue))
+                        .group(closeToNeighboursAgreeGroup)
+                        .render();
                 }
             }
             else if ($(this).hasClass('sort-by-country')) {
-                neighbourhoodChart.x(d3.scale.ordinal()).render();
+                if (SelectedOptionNeighbourhood.val() == "agree-or-strongly-agree") {
+                    neighbourhoodChart
+                        .x(d3.scale.ordinal())
+                        .group(closeToNeighboursAgreeGroupFiltered)
+                        .stack(closeToNeighboursStronglyAgreeGroupFiltered)
+                        .render();
+                }
+                else if (SelectedOptionNeighbourhood.val() == "strongly-agree") {
+                    neighbourhoodChart.x(d3.scale.ordinal()).group(closeToNeighboursStronglyAgreeGroupFiltered).render();
+                }
+                else if (SelectedOptionNeighbourhood.val() == "agree") {
+                    neighbourhoodChart.x(d3.scale.ordinal()).group(closeToNeighboursAgreeGroupFiltered).render();
+                }
             }
         }
     }
