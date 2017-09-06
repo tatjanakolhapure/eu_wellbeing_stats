@@ -173,7 +173,18 @@
 			<div class="col-sm-6">
 			<!-- Relationships Chart -->
 				<div class="chart-wrapper">
-					<div class="chart-title">Relationships</div>
+					<div class="chart-title">
+                        <p>Average rating of satisfaction with personal relationships (1-10) 2013</p>
+                    </div>
+                    <div class="chart-title">
+                        <select id="select-relationships">
+                            <option value="relationships-satisfaction" selected>relationships satisfaction</option>
+                            <option value="social-support">social support</option>
+                            <option value="loneliness">loneliness</option>
+                        </select>
+                        <button class="sort-by-country">Sort by country</button>
+                        <button class="sort-by-value">Sort by value</button>
+                    </div>
 					<div class="chart-stage">
 						<div id="relationships-chart"></div>
 					</div>

@@ -16,7 +16,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     //Clean europeStatsWellbeing data
     europeStatsWellbeing.forEach(function (d) {
         d.life_satisfaction = +d.life_satisfaction;
-        d.soc_support = +d.soc_support;
+        if (d.soc_support) {d.social_support = +d.soc_support;}
         d.life_expectancy_both = +d.life_expectancy.both;
         d.life_expectancy_female = +d.life_expectancy.female;
         d.life_expectancy_male = +d.life_expectancy.male;
@@ -59,7 +59,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 			d.happiness_happy = +d.happiness.happy;
 			d.happiness_high = +(d.happiness_9 + d.happiness_happy);
 		}
-        d.loneliness = +d.loneliness;
+        if (d.loneliness) {d.loneliness = +d.loneliness;}
     });
 
     //Create a Crossfilter instance
@@ -77,7 +77,9 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var unemploymentDim = ndx.dimension(function(d) {if (d.unemployment_rate) {return d.country;} else { return "undefined";}});
     var whereEuropeansLiveDim = ndx.dimension(function(d) {return d.country;});
     var feelSafeDim = ndx.dimension(function(d) {if (d.feel_safe) {return d.country;} else { return "undefined";}});
-
+    var socialSupportDim = ndx.dimension(function(d) {if (d.social_support) {return d.country;} else { return "undefined";}});
+    var relationshipsSatDim = ndx.dimension(function(d) {return d.country;});
+    var lonelinessDim = ndx.dimension(function(d) {if (d.loneliness) {return d.country;} else { return "undefined";}});
 
     //Get top 10 values for row charts
     function getTops(source_group) {
@@ -150,6 +152,12 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var feelSafeGroupFiltered = remove_empty_bins(feelSafeGroup);
     var greenAreasSatGroup = whereEuropeansLiveDim.group().reduceSum(function(d) {return d.green_areas_satisfaction;});
     var greenAreasSatGroupFiltered = remove_empty_bins(greenAreasSatGroup);
+    var socialSupportGroup = socialSupportDim.group().reduceSum(function(d) {return d.social_support;});
+    var socialSupportGroupFiltered = remove_empty_bins(socialSupportGroup);
+    var relationshipsSatGroup = relationshipsSatDim.group().reduceSum(function(d) {return d.pers_relationships_satisfaction;});
+    var relationshipsSatGroupFiltered = remove_empty_bins(relationshipsSatGroup);
+    var lonelinessGroup = lonelinessDim.group().reduceSum(function(d) {return d.loneliness;});
+    var lonelinessGroupFiltered = remove_empty_bins(lonelinessGroup);
 
     //Define domains for sorting charts by values
     var jobSatisfactionByValue = [];
@@ -219,13 +227,22 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     happinessUnhappyGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessUnhappyByValue.push(d.key)}});
 
     var accommodationSatByValue = [];
-    accommodationSatGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {accommodationSatByValue.push(d.key)}});
+    accommodationSatGroup.top(Infinity).forEach(function (d) {accommodationSatByValue.push(d.key)});
 
     var feelSafeByValue = [];
     feelSafeGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {feelSafeByValue.push(d.key)}});
 
     var greenAreasSatByValue = [];
-    greenAreasSatGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {greenAreasSatByValue.push(d.key)}});
+    greenAreasSatGroup.top(Infinity).forEach(function (d) {greenAreasSatByValue.push(d.key)});
+
+    var socialSupportByValue = [];
+    socialSupportGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {socialSupportByValue.push(d.key)}});
+
+    var relationshipsSatByValue = [];
+    relationshipsSatGroup.top(Infinity).forEach(function (d) {relationshipsSatByValue.push(d.key)});
+
+    var lonelinessByValue = [];
+    lonelinessGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {lonelinessByValue.push(d.key)}});
 
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
@@ -237,6 +254,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var netIncomeChart = dc.rowChart('#net-income-chart');
     var unemploymentChart = dc.rowChart('#unemployment-rate-chart');
     var whereEuropeansLiveChart = dc.barChart('#where-europeans-live-chart');
+    var relationshipsChart = dc.barChart('#relationships-chart');
 
     //Create event listeners
     $(document).ready(function()
@@ -246,6 +264,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         $("#select-life-worthwhileness").on( "change", selectLifeWorthwhileness);
         $("#select-neighbourhood").on( "change", selectNeighbourhood);
         $("#select-where-europeans-live").on( "change", selectWhereEuropeansLive);
+        $("#select-relationships").on( "change", selectRelationships);
         $(".chart-title button").on("click", sortChart);
     });
 
@@ -271,7 +290,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
     happinessChart
-		.width(600)
+		.width(550)
 		.height(200)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.brushOn(false)
@@ -550,6 +569,45 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 	}
 
 
+	relationshipsChart
+		.width(790)
+		.height(200)
+		.margins({top: 10, right: 50, bottom: 75, left: 50})
+		.x(d3.scale.ordinal().domain(relationshipsSatByValue))
+		.xUnits(dc.units.ordinal)
+        .title(function (p){return p["key"] + ": " + p["value"] + "%";})
+        .elasticY(true)
+		.brushOn(false)
+        .renderHorizontalGridLines(true)
+		.dimension(relationshipsSatDim)
+		.group(relationshipsSatGroup)
+        .transitionDuration(800)
+        .yAxisLabel("percentage %")
+    	.yAxis().ticks(4);
+
+
+    function selectRelationships()
+	{
+        var chartTitle = $('#relationships-chart').parent().prev('div').prev('div').children('p');
+
+	    if ($(this).val() == "relationships-satisfaction")
+        {
+            relationshipsChart.width(790).group(relationshipsSatGroup).x(d3.scale.ordinal().domain(relationshipsSatByValue)).render();
+            chartTitle.text('Average rating of satisfaction with personal relationships (1-10) 2013');
+        }
+        else if ($(this).val() == "social-support")
+        {
+            relationshipsChart.width(670).group(socialSupportGroup).x(d3.scale.ordinal().domain(socialSupportByValue)).render();
+            chartTitle.text('Perceived social network support - 2015');
+        }
+        else if ($(this).val() == "loneliness")
+        {
+            relationshipsChart.width(550).group(lonelinessGroup).x(d3.scale.ordinal().domain(lonelinessByValue)).render();
+            chartTitle.text('Feeling lonely all or most of the time - 2014');
+        }
+	}
+
+
 	healthChart
         .width(768)
 		.height(250)
@@ -783,6 +841,41 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
                 }
                 else if (SelectedOptionNeighbourhood.val() == "agree") {
                     neighbourhoodChart.x(d3.scale.ordinal()).group(closeToNeighboursAgreeGroupFiltered).render();
+                }
+            }
+        }
+
+        if ($(this).parent().next('div').children().attr('id') == "relationships-chart") {
+            var SelectedOptionRelationships = $('select#select-relationships option:checked');
+            if ($(this).hasClass('sort-by-value')) {
+                if (SelectedOptionRelationships.val() == "relationships-satisfaction") {
+                    relationshipsChart
+                        .x(d3.scale.ordinal().domain(relationshipsSatByValue))
+                        .group(relationshipsSatGroup)
+                        .render();
+                }
+                else if (SelectedOptionRelationships.val() == "social-support") {
+                    relationshipsChart
+                        .x(d3.scale.ordinal().domain(socialSupportByValue))
+                        .group(socialSupportGroup)
+                        .render();
+                }
+                else if (SelectedOptionRelationships.val() == "loneliness") {
+                    relationshipsChart
+                        .x(d3.scale.ordinal().domain(lonelinessByValue))
+                        .group(lonelinessGroup)
+                        .render();
+                }
+            }
+            else if ($(this).hasClass('sort-by-country')) {
+                if (SelectedOptionRelationships.val() == "relationships-satisfaction") {
+                    relationshipsChart.x(d3.scale.ordinal()).group(relationshipsSatGroupFiltered).render();
+                }
+                else if (SelectedOptionRelationships.val() == "social-support") {
+                    relationshipsChart.x(d3.scale.ordinal()).group(socialSupportGroupFiltered).render();
+                }
+                else if (SelectedOptionRelationships.val() == "loneliness") {
+                    relationshipsChart.x(d3.scale.ordinal()).group(lonelinessGroupFiltered).render();
                 }
             }
         }
