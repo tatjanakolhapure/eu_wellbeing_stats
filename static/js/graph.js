@@ -22,7 +22,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         d.life_expectancy_male = +d.life_expectancy.male;
         if (d.good_health) {d.good_health = +d.good_health;}
         if(d.unemployment_rate) {d.unemployment_rate = +d.unemployment_rate;}
-        d.feel_safe = +d.feel_safe;
+        if (d.feel_safe) { d.feel_safe = +d.feel_safe;}
         if (d.life_is_worthwhile)
 		{
         	d.life_is_worthwhile_agree = +d.life_is_worthwhile.agree;
@@ -62,30 +62,21 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         d.loneliness = +d.loneliness;
     });
 
-    //Create event listeners
-    $(document).ready(function()
-    {
-        $("#select-happiness-rating").on( "change", selectHappinessRating);
-        $("#select-personal-finance").on( "change", selectPersonalFinance);
-        $("#select-life-worthwhileness").on( "change", selectLifeWorthwhileness);
-        $("#select-neighbourhood").on( "change", selectNeighbourhood);
-        $('.chart-title button').on("click", sortChart);
-
-    });
-
     //Create a Crossfilter instance
     var ndx = crossfilter(europeStatsWellbeing);
 
     //Define Dimensions
     var lifeSatDim = ndx.dimension(function(d) {return d.country;});
     var personalFinanceDim = ndx.dimension(function(d) {return d.country;});
-    var happinessDim = ndx.dimension(function(d) { if (d.happiness) {return d.country;} else { return "undefined";}});
-    var neighbourhoodDim = ndx.dimension(function(d) { if (d.close_to_neighbours) {return d.country;} else { return "undefined";}});
-    var lifeWorthwhilenessDim = ndx.dimension(function(d) { if (d.life_is_worthwhile) {return d.country;} else { return "undefined";}});
-    var goodHealthDim = ndx.dimension(function(d) { if (d.good_health) {return d.country;} else { return "undefined";}});
-    var mentalHealthDim = ndx.dimension(function(d) { if (d.mental_health_index) {return d.country;} else { return "undefined";}});
+    var happinessDim = ndx.dimension(function(d) {if (d.happiness) {return d.country;} else { return "undefined";}});
+    var neighbourhoodDim = ndx.dimension(function(d) {if (d.close_to_neighbours) {return d.country;} else { return "undefined";}});
+    var lifeWorthwhilenessDim = ndx.dimension(function(d) {if (d.life_is_worthwhile) {return d.country;} else { return "undefined";}});
+    var goodHealthDim = ndx.dimension(function(d) {if (d.good_health) {return d.country;} else { return "undefined";}});
+    var mentalHealthDim = ndx.dimension(function(d) {if (d.mental_health_index) {return d.country;} else { return "undefined";}});
     var netIncomeDim = ndx.dimension(function(d) {return d.country;});
-    var unemploymentDim = ndx.dimension(function(d) { if (d.unemployment_rate) {return d.country;} else { return "undefined";}});
+    var unemploymentDim = ndx.dimension(function(d) {if (d.unemployment_rate) {return d.country;} else { return "undefined";}});
+    var whereEuropeansLiveDim = ndx.dimension(function(d) {return d.country;});
+    var feelSafeDim = ndx.dimension(function(d) {if (d.feel_safe) {return d.country;} else { return "undefined";}});
 
 
     //Get top 10 values for row charts
@@ -133,7 +124,6 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var happinessHappyGroupFiltered = remove_empty_bins(happinessHappyGroup);
     var happinessHighGroup = happinessDim.group().reduceSum(function(d) {return d.happiness_high;});
     var happinessHighGroupFiltered = remove_empty_bins(happinessHighGroup);
-
     var endsMeetGroup = personalFinanceDim.group().reduceSum(function(d) {return d.ends_meet;});
     var riskOfPovertyGroup = personalFinanceDim.group().reduceSum(function(d) {return d.risk_of_poverty;});
     var jobSatisfactionGroup = personalFinanceDim.group().reduceSum(function(d) {return d.job_satisfaction;});
@@ -143,19 +133,23 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var closeToNeighboursStronglyAgreeGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_strongly_agree;});
     var closeToNeighboursStronglyAgreeGroupFiltered = remove_empty_bins(closeToNeighboursStronglyAgreeGroup);
     var closeToNeighboursTotalGroup = neighbourhoodDim.group().reduceSum(function(d) {return d.close_to_neighbours_total;});
-    var closeToNeighboursTotalGroupFiltered = remove_empty_bins(closeToNeighboursTotalGroup);
     var lifeWorthwhilenessAgreeGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_agree;});
     var lifeWorthwhilenessAgreeGroupFiltered = remove_empty_bins(lifeWorthwhilenessAgreeGroup);
     var lifeWorthwhilenessStronglyAgreeGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_strongly_agree;});
     var lifeWorthwhilenessStronglyAgreeGroupFiltered = remove_empty_bins(lifeWorthwhilenessStronglyAgreeGroup);
     var lifeWorthwhilenessTotalGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_total;});
-    var lifeWorthwhilenessTotalGroupFiltered = remove_empty_bins(lifeWorthwhilenessTotalGroup);
     var goodHealthGroup = goodHealthDim.group().reduceSum(function(d) {return d.good_health;});
     var mentalHealthGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_index;});
     var netIncomeGroup = netIncomeDim.group().reduceSum(function(d) {return d.net_income;});
     var netIncomeGroupTop = getTops(netIncomeGroup);
     var unemploymentGroup = unemploymentDim.group().reduceSum(function(d) {return d.unemployment_rate;});
     var unemploymentGroupTop = getTops(unemploymentGroup);
+    var accommodationSatGroup = whereEuropeansLiveDim.group().reduceSum(function(d) {return d.accommodation_satisfaction;});
+    var accommodationSatGroupFiltered = remove_empty_bins(accommodationSatGroup);
+    var feelSafeGroup = feelSafeDim.group().reduceSum(function(d) {return d.feel_safe;});
+    var feelSafeGroupFiltered = remove_empty_bins(feelSafeGroup);
+    var greenAreasSatGroup = whereEuropeansLiveDim.group().reduceSum(function(d) {return d.green_areas_satisfaction;});
+    var greenAreasSatGroupFiltered = remove_empty_bins(greenAreasSatGroup);
 
     //Define domains for sorting charts by values
     var jobSatisfactionByValue = [];
@@ -224,6 +218,15 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var happinessUnhappyByValue = [];
     happinessUnhappyGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {happinessUnhappyByValue.push(d.key)}});
 
+    var accommodationSatByValue = [];
+    accommodationSatGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {accommodationSatByValue.push(d.key)}});
+
+    var feelSafeByValue = [];
+    feelSafeGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {feelSafeByValue.push(d.key)}});
+
+    var greenAreasSatByValue = [];
+    greenAreasSatGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {greenAreasSatByValue.push(d.key)}});
+
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
 	var happinessChart = dc.barChart('#happiness-chart');
@@ -233,6 +236,18 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var healthChart = dc.lineChart('#health-chart');
     var netIncomeChart = dc.rowChart('#net-income-chart');
     var unemploymentChart = dc.rowChart('#unemployment-rate-chart');
+    var whereEuropeansLiveChart = dc.barChart('#where-europeans-live-chart');
+
+    //Create event listeners
+    $(document).ready(function()
+    {
+        $("#select-happiness-rating").on( "change", selectHappinessRating);
+        $("#select-personal-finance").on( "change", selectPersonalFinance);
+        $("#select-life-worthwhileness").on( "change", selectLifeWorthwhileness);
+        $("#select-neighbourhood").on( "change", selectNeighbourhood);
+        $("#select-where-europeans-live").on( "change", selectWhereEuropeansLive);
+        $(".chart-title button").on("click", sortChart);
+    });
 
 
     lifeSatisfactionChart
@@ -254,6 +269,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 			.scale(700)
 			);
 
+
     happinessChart
 		.width(600)
 		.height(200)
@@ -263,6 +279,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.group(happinessHighGroupFiltered)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
         .elasticY(true)
+        .renderHorizontalGridLines(true)
 		.transitionDuration(500)
 		.x(d3.scale.ordinal().domain(happinessHighByValue))
 		.xUnits(dc.units.ordinal)
@@ -349,6 +366,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.ordering(function(d) { return -d.value })
         .xAxis().ticks(4);
 
+
     unemploymentChart
     	.width(300).height(300)
 		.margins({top: 20, left: 10, right: 10, bottom: 33})
@@ -360,6 +378,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.ordering(function(d) { return -d.value })
         .xAxis().ticks(4);
 
+
 	personalFinanceChart
 		.width(790)
 		.height(200)
@@ -369,6 +388,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
         .elasticY(true)
 		.brushOn(false)
+        .renderHorizontalGridLines(true)
 		.dimension(personalFinanceDim)
 		.group(jobSatisfactionGroup)
         .transitionDuration(800)
@@ -378,7 +398,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
     function selectPersonalFinance()
 	{
-        var chartTitle = $('#personal-finance-chart').parent().prev('div').children('p');
+        var chartTitle = $('#personal-finance-chart').parent().prev('div').prev('div').children('p');
 
 	    if ($(this).val() == "job-satisfaction")
         {
@@ -411,6 +431,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.xUnits(dc.units.ordinal)
 		.brushOn(false)
         .elasticY(true)
+        .renderHorizontalGridLines(true)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
 		.dimension(lifeWorthwhilenessDim)
 		.group(lifeWorthwhilenessAgreeGroupFiltered)
@@ -446,6 +467,45 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 	}
 
 
+	whereEuropeansLiveChart
+		.width(790)
+		.height(200)
+		.margins({top: 10, right: 50, bottom: 75, left: 50})
+		.x(d3.scale.ordinal().domain(accommodationSatByValue))
+		.xUnits(dc.units.ordinal)
+        .title(function (p){return p["key"] + ": " + p["value"] + "%";})
+        .elasticY(true)
+		.brushOn(false)
+        .renderHorizontalGridLines(true)
+		.dimension(whereEuropeansLiveDim)
+		.group(accommodationSatGroup)
+        .transitionDuration(800)
+        .yAxisLabel("percentage %")
+    	.yAxis().ticks(4);
+
+
+    function selectWhereEuropeansLive()
+	{
+        var chartTitle = $('#where-europeans-live-chart').parent().prev('div').prev('div').children('p');
+
+	    if ($(this).val() == "accommodation-satisfaction")
+        {
+            whereEuropeansLiveChart.width(790).group(accommodationSatGroup).x(d3.scale.ordinal().domain(accommodationSatByValue)).render();
+            chartTitle.text('Percentage of the population rating their satisfaction with their accommodation as high - 2013');
+        }
+        else if ($(this).val() == "feel-safe")
+        {
+            whereEuropeansLiveChart.width(650).group(feelSafeGroup).x(d3.scale.ordinal().domain(feelSafeByValue)).render();
+            chartTitle.text('Percentage of the population declaring feeling safe when walking alone at night in the city or area where they live - 2014');
+        }
+        else if ($(this).val() == "green-areas-satisfaction")
+        {
+            whereEuropeansLiveChart.width(790).group(greenAreasSatGroup).x(d3.scale.ordinal().domain(greenAreasSatByValue)).render();
+            chartTitle.text('Percentage of the population rating their satisfaction with recreational and green areas as high - 2013');
+        }
+	}
+
+
     neighbourhoodChart
 		.width(770)
 		.height(250)
@@ -454,6 +514,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.xUnits(dc.units.ordinal)
 		.brushOn(false)
         .elasticY(true)
+        .renderHorizontalGridLines(true)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
 		.dimension(neighbourhoodDim)
 		.group(closeToNeighboursAgreeGroupFiltered)
@@ -647,6 +708,41 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
                 }
                 else if (SelectedOptionLifeWorthwhileness.val() == "agree") {
                     lifeWorthwhilenessChart.x(d3.scale.ordinal()).group(lifeWorthwhilenessAgreeGroupFiltered).render();
+                }
+            }
+        }
+
+        if ($(this).parent().next('div').children().attr('id') == "where-europeans-live-chart") {
+            var SelectedOptionWhereEuropeansLive = $('select#select-where-europeans-live option:checked');
+            if ($(this).hasClass('sort-by-value')) {
+                if (SelectedOptionWhereEuropeansLive.val() == "accommodation-satisfaction") {
+                    whereEuropeansLiveChart
+                        .x(d3.scale.ordinal().domain(accommodationSatByValue))
+                        .group(accommodationSatGroup)
+                        .render();
+                }
+                else if (SelectedOptionWhereEuropeansLive.val() == "feel-safe") {
+                    whereEuropeansLiveChart
+                        .x(d3.scale.ordinal().domain(feelSafeByValue))
+                        .group(feelSafeGroup)
+                        .render();
+                }
+                else if (SelectedOptionWhereEuropeansLive.val() == "green-areas-satisfaction") {
+                    whereEuropeansLiveChart
+                        .x(d3.scale.ordinal().domain(greenAreasSatByValue))
+                        .group(greenAreasSatGroup)
+                        .render();
+                }
+            }
+            else if ($(this).hasClass('sort-by-country')) {
+                if (SelectedOptionWhereEuropeansLive.val() == "accommodation-satisfaction") {
+                    whereEuropeansLiveChart.x(d3.scale.ordinal()).group(accommodationSatGroupFiltered).render();
+                }
+                else if (SelectedOptionWhereEuropeansLive.val() == "feel-safe") {
+                    whereEuropeansLiveChart.x(d3.scale.ordinal()).group(feelSafeGroupFiltered).render();
+                }
+                else if (SelectedOptionWhereEuropeansLive.val() == "green-areas-satisfaction") {
+                    whereEuropeansLiveChart.x(d3.scale.ordinal()).group(greenAreasSatGroupFiltered).render();
                 }
             }
         }
