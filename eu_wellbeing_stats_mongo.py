@@ -85,7 +85,6 @@ countries = [
     },
     {
         "country": "Bulgaria",
-        "life_satisfaction": "undefined",
         "life_expectancy": {"both":"66.4","male":"63.8", "female":"69.2"},
         "life_is_worthwhile": {"agree": "49", "strongly_agree": "25"},
         "mental_health_index": {"total":"64", "18_24":"77", "25_34":"74", "35_49":"67", "50_64":"61", "65_plus":"50"},
@@ -101,7 +100,6 @@ countries = [
     },
     {
         "country": "Croatia",
-        "life_satisfaction": "undefined",
         "life_expectancy": {"both":"69.4","male":"67", "female":"71.8"},
         "life_is_worthwhile": {"agree": "48", "strongly_agree": "36"},
         "mental_health_index": {"total":"62", "18_24":"70", "25_34":"69", "35_49":"60", "50_64":"60", "65_plus":"58"},
@@ -117,7 +115,6 @@ countries = [
     },
     {
         "country": "Cyprus",
-        "life_satisfaction": "undefined",
         "life_expectancy": {"both":"71.3","male":"70", "female":"72.6"},
         "life_is_worthwhile": {"agree": "42", "strongly_agree": "33"},
         "mental_health_index": {"total":"61", "18_24":"65", "25_34":"67", "35_49":"60", "50_64":"60", "65_plus":"54"},
@@ -373,7 +370,6 @@ countries = [
     },
     {
         "country": "Lithuania",
-        "life_satisfaction": "undefined",
         "life_expectancy": {"both":"66.1","male":"62", "female":"70.2"},
         "good_health": {"15_plus":"44.9", "15_24":"90.7", "25_44":"75.7", "45_64":"30.8", "65_plus":"4.1"},
         "life_is_worthwhile": {"agree": "53", "strongly_agree": "16"},
@@ -436,7 +432,6 @@ countries = [
     },
     {
         "country": "Malta",
-        "life_satisfaction": "undefined",
         "life_expectancy": {"both":"71.7","male":"70.6", "female":"72.8"},
         "life_is_worthwhile": {"agree": "64", "strongly_agree": "24"},
         "mental_health_index": {"total":"58", "18_24":"65", "25_34":"58", "35_49":"56", "50_64":"56", "65_plus":"56"},
@@ -518,7 +513,6 @@ countries = [
     },
     {
         "country": "Serbia",
-        "life_satisfaction": "undefined",
         "life_expectancy": {"both":"67.7","male":"65.7", "female":"69.6"},
         "life_is_worthwhile": {"agree": "47", "strongly_agree": "34"},
         "mental_health_index": {"total":"54", "18_24":"66", "25_34":"62", "35_49":"55", "50_64":"50", "65_plus":"44"},
@@ -554,7 +548,6 @@ countries = [
     },
     {
         "country": "Romania",
-        "life_satisfaction": "undefined",
         "life_expectancy": {"both":"66.8","male":"64", "female":"69.7"},
         "life_is_worthwhile": {"agree": "44", "strongly_agree": "36"},
         "mental_health_index": {"total":"57", "18_24":"67", "25_34":"66", "35_49":"59", "50_64":"52", "65_plus":"46"},
