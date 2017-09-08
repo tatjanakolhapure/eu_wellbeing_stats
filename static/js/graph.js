@@ -36,7 +36,15 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         	d.life_is_worthwhile_strongly_agree = +d.life_is_worthwhile.strongly_agree;
         	d.life_is_worthwhile_total = +(d.life_is_worthwhile_agree + d.life_is_worthwhile_strongly_agree)
 		}
-        if (d.mental_health_index) {d.mental_health_index = +d.mental_health_index;}
+        if (d.mental_health_index)
+        {
+            d.mental_health_total = +d.mental_health_index.total;
+            d.mental_health_18_24 = +d.mental_health_index["18_24"];
+            d.mental_health_25_34 = +d.mental_health_index["25_34"];
+            d.mental_health_35_49 = +d.mental_health_index["35_49"];
+            d.mental_health_50_64 = +d.mental_health_index["50_64"];
+            d.mental_health_65_plus = +d.mental_health_index["65_plus"];
+        }
         d.pers_relationships_satisfaction = +d.pers_relationships_satisfaction;
         d.job_satisfaction = +d.job_satisfaction;
         d.green_areas_satisfaction = +d.green_areas_satisfaction;
@@ -174,7 +182,18 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var goodHealth45to64GroupFiltered = remove_empty_bins(goodHealth45to64Group);
     var goodHealth65plusGroup = goodHealthDim.group().reduceSum(function(d) {return +d.good_health_65_plus;});
     var goodHealth65PlusGroupFiltered = remove_empty_bins(goodHealth65plusGroup);
-    var mentalHealthGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_index;});
+    var mentalHealthTotalGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_total;});
+    var mentalHealthTotalGroupFiltered = remove_empty_bins(mentalHealthTotalGroup);
+    var mentalHealth18to24Group = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_18_24;});
+    var mentalHealth18to24GroupFiltered = remove_empty_bins(mentalHealth18to24Group);
+    var mentalHealth25to34Group = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_25_34;});
+    var mentalHealth25to34GroupFiltered = remove_empty_bins(mentalHealth25to34Group);
+    var mentalHealth35to49Group = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_35_49;});
+    var mentalHealth35to49GroupFiltered = remove_empty_bins(mentalHealth35to49Group);
+    var mentalHealth50to64Group = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_50_64;});
+    var mentalHealth50to64GroupFiltered = remove_empty_bins(mentalHealth50to64Group);
+    var mentalHealth65PlusGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_65_plus;});
+    var mentalHealth65PlusGroupFiltered = remove_empty_bins(mentalHealth65PlusGroup);
 
     //Define domains for sorting charts by values
     var jobSatisfactionByValue = [];
@@ -276,6 +295,24 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var goodHealth65plusByValue = [];
     goodHealth65plusGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth65plusByValue.push(d.key)}});
 
+    var mentalHealthTotalByValue = [];
+    mentalHealthTotalGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealthTotalByValue.push(d.key)}});
+
+    var mentalHealth18to24ByValue = [];
+    mentalHealth18to24Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth18to24ByValue.push(d.key)}});
+
+    var mentalHealth25to34ByValue = [];
+    mentalHealth25to34Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth25to34ByValue.push(d.key)}});
+
+    var mentalHealth35to49ByValue = [];
+    mentalHealth35to49Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth35to49ByValue.push(d.key)}});
+
+    var mentalHealth50to64ByValue = [];
+    mentalHealth50to64Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth50to64ByValue.push(d.key)}});
+
+    var mentalHealth65PlusByValue = [];
+    mentalHealth65PlusGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth65PlusByValue.push(d.key)}});
+
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
 	var happinessChart = dc.barChart('#happiness-chart');
@@ -297,6 +334,9 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         $("#select-neighbourhood").on( "change", selectNeighbourhood);
         $("#select-where-europeans-live").on( "change", selectWhereEuropeansLive);
         $("#select-relationships").on( "change", selectRelationships);
+        $("#select-health-chart").on( "change", selectHealthChart);
+        $("#select-age-good-health").on( "change", selectAgeForGoodHealth);
+        $("#select-age-mental-health").on( "change", selectAgeForMentalHealth);
         $(".chart-title button").on("click", sortChart);
     });
 
@@ -657,6 +697,94 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     	.yAxis().ticks(4);
 
 
+    function selectHealthChart()
+	{
+        var chartTitle = $('#health-chart').parent().prev('div').prev('div').children('p');
+        var selectAgeGoodHealth = $('#select-age-good-health');
+        var selectAgeMentalHealth = $('#select-age-mental-health');
+
+	    if ($(this).val() == "good-health")
+        {
+            healthChart.width(700).group(goodHealth15plusGroup).x(d3.scale.ordinal().domain(goodHealth15plusByValue)).render();
+            chartTitle.text('Percentage of adults aged 15 and over reporting to be in good or better than good health - 2014');
+            selectAgeMentalHealth.hide();
+            selectAgeGoodHealth.show();
+            selectAgeGoodHealth.val("15-plus");
+        }
+        else if ($(this).val() == "mental-health")
+        {
+            healthChart.width(750).group(mentalHealthTotalGroup).x(d3.scale.ordinal().domain(mentalHealthTotalByValue)).render();
+            chartTitle.text('WHO-5 Mental health scale (mean) - all ages - 2012');
+            selectAgeGoodHealth.hide();
+            selectAgeMentalHealth.show();
+            selectAgeMentalHealth.val("all");
+        }
+	}
+
+	function selectAgeForGoodHealth()
+	{
+        var chart = $("#select-health-chart");
+	    var chartTitle = $('#health-chart').parent().prev('div').prev('div').children('p');
+
+        if (chart.val() == "good-health") {
+
+            if ($(this).val() == "15-plus") {
+                healthChart.width(700).group(goodHealth15plusGroup).x(d3.scale.ordinal().domain(goodHealth15plusByValue)).render();
+                chartTitle.text('Percentage of adults aged 15 and over reporting to be in good or better than good health - 2014');
+            }
+            else if ($(this).val() == "15-24") {
+                healthChart.width(650).group(goodHealth15to24Group).x(d3.scale.ordinal().domain(goodHealth15to24ByValue)).render();
+                chartTitle.text('Percentage of adults aged 15 to 24 reporting to be in good or better than good health - 2014');
+            }
+            else if ($(this).val() == "25-44") {
+                healthChart.width(700).group(goodHealth25to44Group).x(d3.scale.ordinal().domain(goodHealth25to44ByValue)).render();
+                chartTitle.text('Percentage of adults aged 25 to 44 reporting to be in good or better than good health - 2014');
+            }
+            else if ($(this).val() == "45-64") {
+                healthChart.width(700).group(goodHealth45to64Group).x(d3.scale.ordinal().domain(goodHealth45to64ByValue)).render();
+                chartTitle.text('Percentage of adults aged 45 to 64 reporting to be in good or better than good health - 2014');
+            }
+            else if ($(this).val() == "65-plus") {
+                healthChart.width(700).group(goodHealth65plusGroup).x(d3.scale.ordinal().domain(goodHealth65plusByValue)).render();
+                chartTitle.text('Percentage of adults aged 65 and over reporting to be in good or better than good health - 2014');
+            }
+        }
+	}
+
+	function selectAgeForMentalHealth()
+	{
+        var chart = $("#select-health-chart");
+	    var chartTitle = $('#health-chart').parent().prev('div').prev('div').children('p');
+
+        if (chart.val() == "mental-health") {
+
+            if ($(this).val() == "all") {
+                healthChart.width(750).group(mentalHealthTotalGroup).x(d3.scale.ordinal().domain(mentalHealthTotalByValue)).render();
+                chartTitle.text('WHO-5 Mental health scale (mean) - all ages - 2012');
+            }
+            else if ($(this).val() == "18-24") {
+                healthChart.width(750).group(mentalHealth18to24Group).x(d3.scale.ordinal().domain(mentalHealth18to24ByValue)).render();
+                chartTitle.text('WHO-5 Mental health scale (mean) - age 18 to 24 - 2012');
+            }
+            else if ($(this).val() == "25-34") {
+                healthChart.width(750).group(mentalHealth25to34Group).x(d3.scale.ordinal().domain(mentalHealth25to34ByValue)).render();
+                chartTitle.text('WHO-5 Mental health scale (mean) - age 25 to 34 - 2012');
+            }
+            else if ($(this).val() == "35-49") {
+                healthChart.width(750).group(mentalHealth35to49Group).x(d3.scale.ordinal().domain(mentalHealth35to49ByValue)).render();
+                chartTitle.text('WHO-5 Mental health scale (mean) - age 35 to 49 - 2012');
+            }
+            else if ($(this).val() == "50-64") {
+                healthChart.width(750).group(mentalHealth50to64Group).x(d3.scale.ordinal().domain(mentalHealth50to64ByValue)).render();
+                chartTitle.text('WHO-5 Mental health scale (mean) - age 50 to 64 - 2012');
+            }
+            else if ($(this).val() == "65-plus") {
+                healthChart.width(750).group(mentalHealth65PlusGroup).x(d3.scale.ordinal().domain(mentalHealth65PlusByValue)).render();
+                chartTitle.text('WHO-5 Mental health scale (mean) - age 65 and over - 2012');
+            }
+        }
+	}
+
     function sortChart() {
 
         if ($(this).parent().next('div').children().attr('id') == "personal-finance-chart") {
@@ -906,6 +1034,92 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
                 }
                 else if (SelectedOptionRelationships.val() == "loneliness") {
                     relationshipsChart.x(d3.scale.ordinal()).group(lonelinessGroupFiltered).render();
+                }
+            }
+        }
+
+        if ($(this).parent().next('div').children().attr('id') == "health-chart") {
+
+            var SelectedOptionHealth = $('select#select-health-chart option:checked');
+            var SelectedOptionForGoodHealth = $('select#select-age-good-health option:checked');
+            var SelectedOptionForMentalHealth = $('select#select-age-mental-health option:checked');
+
+            if ($(this).hasClass('sort-by-value')) {
+                if (SelectedOptionHealth.val() == "good-health") {
+                    if (SelectedOptionForGoodHealth.val() == "15-plus") {
+                        healthChart.x(d3.scale.ordinal().domain(goodHealth15plusByValue)).group(goodHealth15plusGroup).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "15-24") {
+                        healthChart.x(d3.scale.ordinal().domain(goodHealth15to24ByValue)).group(goodHealth15to24Group).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "25-44") {
+                        healthChart.x(d3.scale.ordinal().domain(goodHealth25to44ByValue)).group(goodHealth25to44Group).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "45-64") {
+                        healthChart.x(d3.scale.ordinal().domain(goodHealth45to64ByValue)).group(goodHealth45to64Group).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "65-plus") {
+                        healthChart.x(d3.scale.ordinal().domain(goodHealth65plusByValue)).group(goodHealth65plusGroup).render();
+                    }
+                }
+                else if (SelectedOptionHealth.val() == "mental-health") {
+                    if (SelectedOptionForMentalHealth.val() == "all") {
+                        healthChart.x(d3.scale.ordinal().domain(mentalHealthTotalByValue)).group(mentalHealthTotalGroup).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "18-24") {
+                        healthChart.x(d3.scale.ordinal().domain(mentalHealth18to24ByValue)).group(mentalHealth18to24Group).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "25-34") {
+                        healthChart.x(d3.scale.ordinal().domain(mentalHealth25to34ByValue)).group(mentalHealth25to34Group).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "35-49") {
+                        healthChart.x(d3.scale.ordinal().domain(mentalHealth35to49ByValue)).group(mentalHealth35to49Group).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "50-64") {
+                        healthChart.x(d3.scale.ordinal().domain(mentalHealth50to64ByValue)).group(mentalHealth50to64Group).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "65-plus") {
+                        healthChart.x(d3.scale.ordinal().domain(mentalHealth65PlusByValue)).group(mentalHealth65PlusGroup).render();
+                    }
+                }
+            }
+            else if ($(this).hasClass('sort-by-country')) {
+                if (SelectedOptionHealth.val() == "good-health") {
+                    if (SelectedOptionForGoodHealth.val() == "15-plus") {
+                        healthChart.x(d3.scale.ordinal()).group(goodHealth15PlusGroupFiltered).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "15-24") {
+                        healthChart.x(d3.scale.ordinal()).group(goodHealth15to24GroupFiltered).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "25-44") {
+                        healthChart.x(d3.scale.ordinal()).group(goodHealth25to44GroupFiltered).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "45-64") {
+                        healthChart.x(d3.scale.ordinal()).group(goodHealth45to64GroupFiltered).render();
+                    }
+                    else if (SelectedOptionForGoodHealth.val() == "65-plus") {
+                        healthChart.x(d3.scale.ordinal()).group(goodHealth65PlusGroupFiltered).render();
+                    }
+                }
+                else if (SelectedOptionHealth.val() == "mental-health") {
+                    if (SelectedOptionForMentalHealth.val() == "all") {
+                        healthChart.x(d3.scale.ordinal()).group(mentalHealthTotalGroupFiltered).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "18-24") {
+                        healthChart.x(d3.scale.ordinal()).group(mentalHealth18to24GroupFiltered).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "25-34") {
+                        healthChart.x(d3.scale.ordinal()).group(mentalHealth25to34GroupFiltered).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "35-49") {
+                        healthChart.x(d3.scale.ordinal()).group(mentalHealth35to49GroupFiltered).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "50-64") {
+                        healthChart.x(d3.scale.ordinal()).group(mentalHealth50to64GroupFiltered).render();
+                    }
+                    else if (SelectedOptionForMentalHealth.val() == "65-plus") {
+                        healthChart.x(d3.scale.ordinal()).group(mentalHealth65PlusGroupFiltered).render();
+                    }
                 }
             }
         }

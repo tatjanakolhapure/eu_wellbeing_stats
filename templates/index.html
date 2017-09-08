@@ -194,7 +194,32 @@
 			<div class="col-sm-6">
 			<!-- Health Chart -->
 				<div class="chart-wrapper">
-					<div class="chart-title">Health</div>
+					<div class="chart-title">
+                        <p>Percentage of adults aged 15 and over reporting to be in good or better than good health - 2014</p>
+                    </div>
+                    <div class="chart-title">
+                        <select id="select-health-chart">
+                            <option value="good-health" selected>perceived good health</option>
+                            <option value="mental-health">mental health scale</option>
+                        </select>
+                        <select id="select-age-good-health">
+                            <option value="15-plus" selected>Age 15+</option>
+                            <option value="15-24">Age 15-24</option>
+                            <option value="25-44">Age 25-44</option>
+                            <option value="45-64">Age 45-64</option>
+                            <option value="65-plus">Age 65+</option>
+                        </select>
+                        <select id="select-age-mental-health">
+                            <option value="all" selected>All ages</option>
+                            <option value="18-24">Age 18-24</option>
+                            <option value="25-34">Age 25-34</option>
+                            <option value="35-49">Age 35-49</option>
+                            <option value="50-64">Age 50-64</option>
+                            <option value="65-plus">Age 65+</option>
+                        </select>
+                        <button class="sort-by-country">Sort by country</button>
+                        <button class="sort-by-value">Sort by value</button>
+                    </div>
 					<div class="chart-stage">
 						<div id="health-chart"></div>
 					</div>
