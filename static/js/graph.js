@@ -15,7 +15,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
     //Clean europeStatsWellbeing data
     europeStatsWellbeing.forEach(function (d) {
-        d.life_satisfaction = +d.life_satisfaction;
+        if (d.life_satisfaction) {d.life_satisfaction = +d.life_satisfaction;}
         if (d.soc_support) {d.social_support = +d.soc_support;}
         d.life_expectancy_both = +d.life_expectancy.both;
         d.life_expectancy_female = +d.life_expectancy.female;
@@ -81,7 +81,8 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var ndx = crossfilter(europeStatsWellbeing);
 
     //Define Dimensions
-    var lifeSatDim = ndx.dimension(function(d) {return d.country;});
+    var lifeSatDim = ndx.dimension(function(d) {if (d.life_satisfaction) {return d.country;} else { return "undefined";}});
+    var lifeSatTableDim = ndx.dimension(function(d) {return d.life_satisfaction;});
     var personalFinanceDim = ndx.dimension(function(d) {return d.country;});
     var happinessDim = ndx.dimension(function(d) {if (d.happiness) {return d.country;} else { return "undefined";}});
     var neighbourhoodDim = ndx.dimension(function(d) {if (d.close_to_neighbours) {return d.country;} else { return "undefined";}});
@@ -322,6 +323,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
+    var lifeSatisfactionTable = dc.dataTable('#life-satisfaction-datatable');
 	var happinessChart = dc.barChart('#happiness-chart');
     var personalFinanceChart = dc.barChart('#personal-finance-chart');
     var neighbourhoodChart = dc.barChart('#neighbourhood-chart');
@@ -368,6 +370,14 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 			.rotate([4.4, 0])
 			.scale(700)
 			);
+
+
+    lifeSatisfactionTable
+        .dimension(lifeSatTableDim)
+        .group(function(d) {return d.life_satisfaction;})
+        .order(d3.descending)
+        .columns([function (d) {if (d.life_satisfaction) {return d.country;}},
+                    function (d) {if (d.life_satisfaction) {return d.life_satisfaction;}}]);
 
 
     happinessChart
@@ -798,7 +808,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
 	lifeExpectancyChart
-    	.width(300).height(300)
+    	.width(250).height(300)
 		.margins({top: 20, left: 10, right: 10, bottom: 33})
 		.gap(2)
 		.elasticX(true)

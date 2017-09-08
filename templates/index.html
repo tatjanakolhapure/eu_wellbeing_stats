@@ -32,57 +32,78 @@
 			<!-- Life Satisfaction Map -->
 			</div>
 			<div class="col-sm-8">
-            <!-- Happiness Chart -->
-                <div class="chart-wrapper">
-                    <div class="chart-title">
-                        <p>Rating of happiness as high - 2014</p>
+		        <div class="row">
+                    <div class="col-sm-4">
+                    <!-- Life Satisfaction Table -->
+                        <div class="chart-wrapper">
+                            <div class="chart-title">
+                                <p>Mean rating of life satisfaction (1 to 10) - 2015</p>
+                            </div>
+                            <div class="chart-stage">
+                                <table id="life-satisfaction-datatable">
+                                    <thead>
+                                        <th class="data-table-col" data-col="country">Country</th>
+                                        <th class="data-table-col" data-col="life-satisfaction">Rating</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    <!-- Life Satisfaction Table -->
                     </div>
-                    <div class="chart-title">
-                        <select id="select-happiness-rating">
-                            <option value="high" selected>high 9 to 10</option>
-                            <option value="ten">extremely happy</option>
-                            <option value="nine">9</option>
-                            <option value="eight">8</option>
-                            <option value="seven">7</option>
-                            <option value="six">6</option>
-                            <option value="five">5</option>
-                            <option value="four">4</option>
-                            <option value="three">3</option>
-                            <option value="two">2</option>
-                            <option value="one">1</option>
-                            <option value="zero">extremely unhappy</option>
-                        </select>
-                        <button class="sort-by-country">Sort by country</button>
-                        <button class="sort-by-value">Sort by value</button>
+                    <div class="col-sm-8">
+                    <!-- Happiness Chart -->
+                        <div class="chart-wrapper">
+                            <div class="chart-title">
+                                <p>Rating of happiness as high - 2014</p>
+                            </div>
+                            <div class="chart-title">
+                                <select id="select-happiness-rating">
+                                    <option value="high" selected>high 9 to 10</option>
+                                    <option value="ten">extremely happy</option>
+                                    <option value="nine">9</option>
+                                    <option value="eight">8</option>
+                                    <option value="seven">7</option>
+                                    <option value="six">6</option>
+                                    <option value="five">5</option>
+                                    <option value="four">4</option>
+                                    <option value="three">3</option>
+                                    <option value="two">2</option>
+                                    <option value="one">1</option>
+                                    <option value="zero">extremely unhappy</option>
+                                </select>
+                                <button class="sort-by-country">Sort by country</button>
+                                <button class="sort-by-value">Sort by value</button>
+                            </div>
+                            <div class="chart-stage">
+                                <div id="happiness-chart"></div>
+                            </div>
+                        </div>
+                    <!-- Happiness Chart -->
                     </div>
-                    <div class="chart-stage">
-                        <div id="happiness-chart"></div>
+                    <div class="col-sm-8">
+                    <!-- Personal Finance -->
+                        <div class="chart-wrapper">
+                            <div class="chart-title">
+                                <p>Percentage of the population rating their satisfaction with their job as high - 2013</p>
+                            </div>
+                            <div class="chart-title">
+                                <select id="select-personal-finance">
+                                    <option value="job-satisfaction" selected>job satisfaction</option>
+                                    <option value="finances-satisfaction">finances satisfaction</option>
+                                    <option value="at-poverty-risk">at poverty risk</option>
+                                    <option value="ends-meet">ends meet</option>
+                                </select>
+                                <button class="sort-by-country">Sort by country</button>
+                                <button class="sort-by-value">Sort by value</button>
+                            </div>
+                            <div class="chart-stage">
+                                <div id="personal-finance-chart"></div>
+                            </div>
+                        </div>
+                    <!-- Personal Finance -->
                     </div>
                 </div>
-            <!-- Happiness Chart -->
-			</div>
-			<div class="col-sm-8">
-            <!-- Personal Finance -->
-                <div class="chart-wrapper">
-                    <div class="chart-title">
-                        <p>Percentage of the population rating their satisfaction with their job as high - 2013</p>
-                    </div>
-                    <div class="chart-title">
-                        <select id="select-personal-finance">
-                            <option value="job-satisfaction" selected>job satisfaction</option>
-                            <option value="finances-satisfaction">finances satisfaction</option>
-                            <option value="at-poverty-risk">at poverty risk</option>
-                            <option value="ends-meet">ends meet</option>
-                        </select>
-                        <button class="sort-by-country">Sort by country</button>
-                        <button class="sort-by-value">Sort by value</button>
-                    </div>
-                    <div class="chart-stage">
-                        <div id="personal-finance-chart"></div>
-                    </div>
-                </div>
-            <!-- Personal Finance -->
-			</div>
+            </div>
 			<div class="col-sm-6">
 				<div class="row">
 					<div class="col-sm-6">
