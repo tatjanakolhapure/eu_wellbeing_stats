@@ -20,7 +20,14 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         d.life_expectancy_both = +d.life_expectancy.both;
         d.life_expectancy_female = +d.life_expectancy.female;
         d.life_expectancy_male = +d.life_expectancy.male;
-        if (d.good_health) {d.good_health = +d.good_health;}
+        if (d.good_health)
+        {
+            d.good_health_15_plus = +d.good_health["15_plus"];
+            d.good_health_15_24 = +d.good_health["15_24"];
+            if (d.good_health["25_44"]) {d.good_health_25_44 = +d.good_health["25_44"];}
+            d.good_health_45_64 = +d.good_health["45_64"];
+            d.good_health_65_plus = +d.good_health["65_plus"];
+        }
         if(d.unemployment_rate) {d.unemployment_rate = +d.unemployment_rate;}
         if (d.feel_safe) { d.feel_safe = +d.feel_safe;}
         if (d.life_is_worthwhile)
@@ -72,6 +79,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var neighbourhoodDim = ndx.dimension(function(d) {if (d.close_to_neighbours) {return d.country;} else { return "undefined";}});
     var lifeWorthwhilenessDim = ndx.dimension(function(d) {if (d.life_is_worthwhile) {return d.country;} else { return "undefined";}});
     var goodHealthDim = ndx.dimension(function(d) {if (d.good_health) {return d.country;} else { return "undefined";}});
+    var goodHealth25to44Dim = ndx.dimension(function(d) {if (d.good_health_25_44) {return d.country;} else { return "undefined";}});
     var mentalHealthDim = ndx.dimension(function(d) {if (d.mental_health_index) {return d.country;} else { return "undefined";}});
     var netIncomeDim = ndx.dimension(function(d) {return d.country;});
     var unemploymentDim = ndx.dimension(function(d) {if (d.unemployment_rate) {return d.country;} else { return "undefined";}});
@@ -140,8 +148,6 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var lifeWorthwhilenessStronglyAgreeGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_strongly_agree;});
     var lifeWorthwhilenessStronglyAgreeGroupFiltered = remove_empty_bins(lifeWorthwhilenessStronglyAgreeGroup);
     var lifeWorthwhilenessTotalGroup = lifeWorthwhilenessDim.group().reduceSum(function(d) {return d.life_is_worthwhile_total;});
-    var goodHealthGroup = goodHealthDim.group().reduceSum(function(d) {return d.good_health;});
-    var mentalHealthGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_index;});
     var netIncomeGroup = netIncomeDim.group().reduceSum(function(d) {return d.net_income;});
     var netIncomeGroupTop = getTops(netIncomeGroup);
     var unemploymentGroup = unemploymentDim.group().reduceSum(function(d) {return d.unemployment_rate;});
@@ -158,6 +164,17 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var relationshipsSatGroupFiltered = remove_empty_bins(relationshipsSatGroup);
     var lonelinessGroup = lonelinessDim.group().reduceSum(function(d) {return d.loneliness;});
     var lonelinessGroupFiltered = remove_empty_bins(lonelinessGroup);
+    var goodHealth15plusGroup = goodHealthDim.group().reduceSum(function(d) {return +d.good_health_15_plus;});
+    var goodHealth15PlusGroupFiltered = remove_empty_bins(goodHealth15plusGroup);
+    var goodHealth15to24Group = goodHealthDim.group().reduceSum(function(d) {return +d.good_health_15_24;});
+    var goodHealth15to24GroupFiltered = remove_empty_bins(goodHealth15to24Group);
+    var goodHealth25to44Group = goodHealth25to44Dim.group().reduceSum(function(d) {return +d.good_health_25_44;});
+    var goodHealth25to44GroupFiltered = remove_empty_bins(goodHealth25to44Group);
+    var goodHealth45to64Group = goodHealthDim.group().reduceSum(function(d) {return +d.good_health_45_64;});
+    var goodHealth45to64GroupFiltered = remove_empty_bins(goodHealth45to64Group);
+    var goodHealth65plusGroup = goodHealthDim.group().reduceSum(function(d) {return +d.good_health_65_plus;});
+    var goodHealth65PlusGroupFiltered = remove_empty_bins(goodHealth65plusGroup);
+    var mentalHealthGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_index;});
 
     //Define domains for sorting charts by values
     var jobSatisfactionByValue = [];
@@ -244,13 +261,28 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var lonelinessByValue = [];
     lonelinessGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {lonelinessByValue.push(d.key)}});
 
+    var goodHealth15plusByValue = [];
+    goodHealth15plusGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth15plusByValue.push(d.key)}});
+
+    var goodHealth15to24ByValue = [];
+    goodHealth15to24Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth15to24ByValue.push(d.key)}});
+
+    var goodHealth25to44ByValue = [];
+    goodHealth25to44Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth25to44ByValue.push(d.key)}});
+
+    var goodHealth45to64ByValue = [];
+    goodHealth45to64Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth45to64ByValue.push(d.key)}});
+
+    var goodHealth65plusByValue = [];
+    goodHealth65plusGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth65plusByValue.push(d.key)}});
+
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
 	var happinessChart = dc.barChart('#happiness-chart');
     var personalFinanceChart = dc.barChart('#personal-finance-chart');
     var neighbourhoodChart = dc.barChart('#neighbourhood-chart');
     var lifeWorthwhilenessChart = dc.barChart('#life-worthwhileness-chart');
-    var healthChart = dc.lineChart('#health-chart');
+    var healthChart = dc.barChart('#health-chart');
     var netIncomeChart = dc.rowChart('#net-income-chart');
     var unemploymentChart = dc.rowChart('#unemployment-rate-chart');
     var whereEuropeansLiveChart = dc.barChart('#where-europeans-live-chart');
@@ -527,7 +559,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
     neighbourhoodChart
 		.width(770)
-		.height(250)
+		.height(200)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(closeToNeighboursTotalByValue))
 		.xUnits(dc.units.ordinal)
@@ -609,20 +641,18 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
 	healthChart
-        .width(768)
-		.height(250)
+		.width(700)
+		.height(200)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
-		.x(d3.scale.ordinal())
+		.x(d3.scale.ordinal().domain(goodHealth25to44ByValue))
 		.xUnits(dc.units.ordinal)
-		.renderHorizontalGridLines(true)
-		.brushOn(false)
-        .renderArea(true)
-        .elasticY(true)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
-        .transitionDuration(800)
+        .elasticY(true)
+		.brushOn(false)
+        .renderHorizontalGridLines(true)
 		.dimension(goodHealthDim)
-		.group(goodHealthGroup)
-        .defined(function(d) { return !isNaN(d.y)})
+		.group(goodHealth25to44Group)
+        .transitionDuration(800)
         .yAxisLabel("percentage %")
     	.yAxis().ticks(4);
 
