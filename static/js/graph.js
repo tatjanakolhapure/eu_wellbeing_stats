@@ -96,6 +96,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var socialSupportDim = ndx.dimension(function(d) {if (d.social_support) {return d.country;} else { return "undefined";}});
     var relationshipsSatDim = ndx.dimension(function(d) {return d.country;});
     var lonelinessDim = ndx.dimension(function(d) {if (d.loneliness) {return d.country;} else { return "undefined";}});
+    var lifeExpectancyDim = ndx.dimension(function(d) {return d.country;});
 
     //Get top 10 values for row charts
     function getTops(source_group) {
@@ -194,6 +195,12 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var mentalHealth50to64GroupFiltered = remove_empty_bins(mentalHealth50to64Group);
     var mentalHealth65PlusGroup = mentalHealthDim.group().reduceSum(function(d) {return d.mental_health_65_plus;});
     var mentalHealth65PlusGroupFiltered = remove_empty_bins(mentalHealth65PlusGroup);
+    var lifeExpectancyBothGroup = lifeExpectancyDim.group().reduceSum(function(d) {return d.life_expectancy_both;});
+    var lifeExpectancyBothGroupTop = getTops(lifeExpectancyBothGroup);
+    var lifeExpectancyMaleGroup = lifeExpectancyDim.group().reduceSum(function(d) {return d.life_expectancy_male;});
+    var lifeExpectancyMakeGroupTop = getTops(lifeExpectancyMaleGroup);
+    var lifeExpectancyFemaleGroup = lifeExpectancyDim.group().reduceSum(function(d) {return d.life_expectancy_female;});
+    var lifeExpectancyFemaleGroupTop = getTops(lifeExpectancyFemaleGroup);
 
     //Define domains for sorting charts by values
     var jobSatisfactionByValue = [];
@@ -324,6 +331,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     var unemploymentChart = dc.rowChart('#unemployment-rate-chart');
     var whereEuropeansLiveChart = dc.barChart('#where-europeans-live-chart');
     var relationshipsChart = dc.barChart('#relationships-chart');
+    var lifeExpectancyChart = dc.rowChart('#life-expectancy-chart');
 
     //Create event listeners
     $(document).ready(function()
@@ -337,6 +345,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         $("#select-health-chart").on( "change", selectHealthChart);
         $("#select-age-good-health").on( "change", selectAgeForGoodHealth);
         $("#select-age-mental-health").on( "change", selectAgeForMentalHealth);
+        $("#select-sex").on( "change", selectLifeExpectancySex);
         $(".chart-title button").on("click", sortChart);
     });
 
@@ -453,6 +462,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.elasticX(true)
 		.dimension(netIncomeDim)
 		.group(netIncomeGroupTop)
+        .transitionDuration(800)
         .title(function (p){return p["key"] + ": " + d3.format(",d")(p["value"]) + " PPS";})
 		.ordering(function(d) { return -d.value })
         .xAxis().ticks(4);
@@ -465,6 +475,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.elasticX(true)
 		.dimension(unemploymentDim)
 		.group(unemploymentGroupTop)
+        .transitionDuration(800)
         .title(function (p){return p["key"] + ": " + p["value"] + "%";})
 		.ordering(function(d) { return -d.value })
         .xAxis().ticks(4);
@@ -785,7 +796,43 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         }
 	}
 
-    function sortChart() {
+
+	lifeExpectancyChart
+    	.width(300).height(300)
+		.margins({top: 20, left: 10, right: 10, bottom: 33})
+		.gap(2)
+		.elasticX(true)
+		.dimension(lifeExpectancyDim)
+		.group(lifeExpectancyBothGroupTop)
+        .transitionDuration(800)
+        .title(function (p){return p["key"] + ": " + p["value"] + " years";})
+		.ordering(function(d) { return -d.value })
+        .xAxis().ticks(4);
+
+
+    function selectLifeExpectancySex()
+	{
+        var chartTitle = $('#life-expectancy-chart').parent().prev('div').prev('div').children('p');
+
+	    if ($(this).val() == "all")
+        {
+            lifeExpectancyChart.group(lifeExpectancyBothGroupTop).render();
+            chartTitle.text('Top 10 Healthy life expectancy at birth - all - 2015');
+        }
+        else if ($(this).val() == "male")
+        {
+            lifeExpectancyChart.group(lifeExpectancyMakeGroupTop).render();
+            chartTitle.text('Top 10 Healthy life expectancy at birth - male - 2015');
+        }
+        else if ($(this).val() == "female")
+        {
+            lifeExpectancyChart.group(lifeExpectancyFemaleGroupTop).render();
+            chartTitle.text('Top 10 Healthy life expectancy at birth - female - 2015');
+        }
+	}
+
+
+	function sortChart() {
 
         if ($(this).parent().next('div').children().attr('id') == "personal-finance-chart") {
             var SelectedOptionPersonalFinance = $('select#select-personal-finance option:checked');
