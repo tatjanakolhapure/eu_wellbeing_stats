@@ -354,26 +354,6 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     });
 
 
-    lifeSatisfactionChart
-		.width(800)
-		.height(680)
-		.dimension(lifeSatDim)
-		.group(lifeSatGroup)
-		.overlayGeoJson(countriesJson.features, "country", function (d) {return d.properties.name;})
-		.title(function (p)
-			{
-				if (isNaN(p["value"])) {return p["key"] + ": undefined";}
-				else {return p["key"] + ": " + p["value"] + " out of 10";}
-			})
-		.colors(['#ccc','#E2F2FF','#C4E4FF','#9ED2FF','#81C5FF','#C4E4FF','#81C5FF','#51AEFF','#1E96FF','#0061B5','#0055b5'])
-        .colorDomain([0, 10])
-		.projection(d3.geo.mercator()
-			.center([28,54])
-			.rotate([4.4, 0])
-			.scale(800)
-			);
-
-
     lifeSatisfactionTable
         .dimension(lifeSatTableDim)
         .group(function(d) {return d.life_satisfaction;})
@@ -468,7 +448,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
 	netIncomeChart
-    	.width(300).height(300)
+    	.width(280).height(300)
 		.margins({top: 20, left: 10, right: 10, bottom: 33})
 		.gap(2)
 		.elasticX(true)
@@ -481,7 +461,8 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
     unemploymentChart
-    	.width(300).height(300)
+    	.width(280)
+        .height(300)
 		.margins({top: 20, left: 10, right: 10, bottom: 33})
 		.gap(2)
 		.elasticX(true)
@@ -495,7 +476,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 	personalFinanceChart
 		.width(790)
-		.height(285)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(jobSatisfactionByValue))
 		.xUnits(dc.units.ordinal)
@@ -539,7 +520,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 	lifeWorthwhilenessChart
 		.width(770)
-		.height(285)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(lifeWorthwhilenessTotalByValue))
 		.xUnits(dc.units.ordinal)
@@ -810,7 +791,8 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
 	lifeExpectancyChart
-    	.width(250).height(300)
+    	.width(280)
+        .height(300)
 		.margins({top: 20, left: 10, right: 10, bottom: 33})
 		.gap(2)
 		.elasticX(true)
@@ -1187,17 +1169,14 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
     function setWidth() {
         var lgCol = $('.col-md-6-js');
-        var smCol = $('.col-md-3-js');
         var mdCol = $('.col-md-js');
 
         if ($(window).width() < 1500 ) {
             lgCol.addClass('full-width');
-            smCol.addClass('half-width');
         }
         else
         {
             lgCol.removeClass('full-width');
-            smCol.removeClass('half-width');
         }
 
         if ($(window).width() < 1025 ) {
@@ -1206,6 +1185,56 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         else
         {
             mdCol.removeClass('full-width');
+        }
+
+        if ($(window).width() < 769 )
+        {
+            lifeSatisfactionChart
+                .width(350)
+                .height(350)
+                .dimension(lifeSatDim)
+                .group(lifeSatGroup)
+                .overlayGeoJson(countriesJson.features, "country", function (d) {
+                    return d.properties.name;
+                })
+                .title(function (p) {
+                    if (isNaN(p["value"])) {
+                        return p["key"] + ": undefined";
+                    }
+                    else {
+                        return p["key"] + ": " + p["value"] + " out of 10";
+                    }
+                })
+                .colors(['#ccc', '#E2F2FF', '#C4E4FF', '#9ED2FF', '#81C5FF', '#C4E4FF', '#81C5FF', '#51AEFF', '#1E96FF', '#0061B5', '#0055b5'])
+                .colorDomain([0, 10])
+                .projection(d3.geo.mercator()
+                    .center([59, 45])
+                    .rotate([4.4, 0])
+                    .scale(350)
+                )
+                .render();
+        }
+        else
+        {
+            lifeSatisfactionChart
+                .width(800)
+                .height(600)
+                .dimension(lifeSatDim)
+                .group(lifeSatGroup)
+                .overlayGeoJson(countriesJson.features, "country", function (d) {return d.properties.name;})
+                .title(function (p)
+                    {
+                        if (isNaN(p["value"])) {return p["key"] + ": undefined";}
+                        else {return p["key"] + ": " + p["value"] + " out of 10";}
+                    })
+                .colors(['#ccc','#E2F2FF','#C4E4FF','#9ED2FF','#81C5FF','#C4E4FF','#81C5FF','#51AEFF','#1E96FF','#0061B5','#0055b5'])
+                .colorDomain([0, 10])
+                .projection(d3.geo.mercator()
+                    .center([25,55])
+                    .rotate([4.4, 0])
+                    .scale(600)
+                    )
+                .render();
         }
     }
 
