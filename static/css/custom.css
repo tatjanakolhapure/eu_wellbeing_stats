@@ -46,15 +46,16 @@ select
 {
     display:none;
 }
-
 .dc-table-group
 {
     display:none;
 }
 
-td
+.dc-table-column._0,
+.dc-table-column._1
 {
     width: 140px;
+    padding: 2px 0;
 }
 
 .full-width
