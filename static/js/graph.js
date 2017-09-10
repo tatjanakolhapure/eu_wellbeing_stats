@@ -1242,7 +1242,6 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         $(window).on('resize', setWidth);
     }
 
-
     dc.renderAll();
 
 }
