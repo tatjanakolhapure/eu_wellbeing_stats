@@ -54,3 +54,17 @@ td
 {
     width: 140px;
 }
+
+.chart-wrapper .chart-stage
+{
+    overflow: auto;
+}
+
+@media (max-width: 767px) {
+
+    select
+    {
+        display: block;
+    }
+
+}
