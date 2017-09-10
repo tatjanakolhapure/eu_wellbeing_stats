@@ -70,23 +70,18 @@ select
 
 .chart-wrapper .chart-stage
 {
-        overflow: auto;
-}
-
-.navbar-header
-{
-    width: 100%;
-}
-
-.btn--reset
-{
-    float: right;
+    overflow: auto;
 }
 
 .btn--reset,
 .intro_button
 {
     margin: 8px 0;
+}
+
+.intro_button
+{
+    margin-right: 5px;
 }
 
 @media (max-width: 767px) {
@@ -97,12 +92,21 @@ select
         margin-bottom: 12px;
     }
 
-    .btn--reset
+    .container-fluid>.navbar-header
     {
-        float: right;
-        margin: 8px -15px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .navbar-brand
+    {
+        padding: 15px 10px 15px 0;
+    }
+
+    .btn--reset,
+    .intro_button
+    {
+        padding: 6px 8px;
     }
 
 }
-
-
