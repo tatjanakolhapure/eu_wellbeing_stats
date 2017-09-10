@@ -353,8 +353,8 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 
     lifeSatisfactionChart
-		.width(570)
-		.height(520)
+		.width(620)
+		.height(680)
 		.dimension(lifeSatDim)
 		.group(lifeSatGroup)
 		.overlayGeoJson(countriesJson.features, "country", function (d) {return d.properties.name;})
@@ -366,9 +366,9 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 		.colors(['#ccc','#E2F2FF','#C4E4FF','#9ED2FF','#81C5FF','#C4E4FF','#81C5FF','#51AEFF','#1E96FF','#0061B5','#0055b5'])
         .colorDomain([0, 10])
 		.projection(d3.geo.mercator()
-			.center([32,50])
+			.center([28,54])
 			.rotate([4.4, 0])
-			.scale(700)
+			.scale(800)
 			);
 
 
@@ -376,13 +376,13 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         .dimension(lifeSatTableDim)
         .group(function(d) {return d.life_satisfaction;})
         .order(d3.descending)
-        .columns([function (d) {if (d.life_satisfaction) {return d.country;}},
-                    function (d) {if (d.life_satisfaction) {return d.life_satisfaction;}}]);
-
+        .columns([function (d) { if (d.life_satisfaction) {return d.country;}},
+                    function (d) {if (d.life_satisfaction) {return d.life_satisfaction;}}
+                    ]);
 
     happinessChart
 		.width(550)
-		.height(200)
+		.height(300)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.brushOn(false)
 		.dimension(happinessDim)
@@ -493,7 +493,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 	personalFinanceChart
 		.width(790)
-		.height(200)
+		.height(285)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(jobSatisfactionByValue))
 		.xUnits(dc.units.ordinal)
@@ -537,7 +537,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 	lifeWorthwhilenessChart
 		.width(770)
-		.height(250)
+		.height(285)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(lifeWorthwhilenessTotalByValue))
 		.xUnits(dc.units.ordinal)
@@ -581,7 +581,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 	whereEuropeansLiveChart
 		.width(790)
-		.height(200)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(accommodationSatByValue))
 		.xUnits(dc.units.ordinal)
@@ -620,7 +620,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
     neighbourhoodChart
 		.width(770)
-		.height(200)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(closeToNeighboursTotalByValue))
 		.xUnits(dc.units.ordinal)
@@ -664,7 +664,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 	relationshipsChart
 		.width(790)
-		.height(200)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(relationshipsSatByValue))
 		.xUnits(dc.units.ordinal)
@@ -703,7 +703,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
 
 	healthChart
 		.width(700)
-		.height(200)
+		.height(250)
 		.margins({top: 10, right: 50, bottom: 75, left: 50})
 		.x(d3.scale.ordinal().domain(goodHealth25to44ByValue))
 		.xUnits(dc.units.ordinal)

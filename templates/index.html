@@ -21,66 +21,118 @@
 
 	<div id="outer" class="container-fluid">	
 		<div class="row">
-			<div class="col-sm-4">
-			<!-- Life Satisfaction Map -->
-				<div class="chart-wrapper">
-					<div class="chart-title">Mean rating of life satisfaction - 2015</div>
-					<div class="chart-stage">
-						<div id="life-satisfaction-map"></div>
-					</div>
-				</div>
-			<!-- Life Satisfaction Map -->
-			</div>
-			<div class="col-sm-8">
-		        <div class="row">
-                    <div class="col-sm-4">
-                    <!-- Life Satisfaction Table -->
-                        <div class="chart-wrapper">
-                            <div class="chart-title">
-                                <p>Mean rating of life satisfaction (1 to 10) - 2015</p>
+			<div class="col-md-6 col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                            <!-- Life Satisfaction Map -->
+                                <div class="chart-wrapper">
+                                    <div class="chart-title">Mean rating of life satisfaction (1 to 10) - 2015</div>
+                                    <div class="chart-stage">
+                                        <div id="life-satisfaction-map"></div>
+                                    </div>
+                                </div>
+                            <!-- Life Satisfaction Map -->
                             </div>
-                            <div class="chart-stage">
-                                <table id="life-satisfaction-datatable">
-                                    <thead>
-                                        <th class="data-table-col" data-col="country">Country</th>
-                                        <th class="data-table-col" data-col="life-satisfaction">Rating</th>
-                                    </thead>
-                                </table>
+                            <div class="col-xs-12 col-sm-4">
+                            <!-- Life Satisfaction Table -->
+                                <div class="chart-wrapper">
+                                    <div class="chart-title">
+                                        <p>Mean rating of life satisfaction (1 to 10) - 2015</p>
+                                    </div>
+                                    <div class="chart-stage">
+                                        <table id="life-satisfaction-datatable">
+                                            <thead>
+                                                <th class="data-table-col" data-col="country">Country</th>
+                                                <th class="data-table-col" data-col="life-satisfaction">Rating</th>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            <!-- Life Satisfaction Table -->
                             </div>
                         </div>
-                    <!-- Life Satisfaction Table -->
                     </div>
-                    <div class="col-sm-8">
-                    <!-- Happiness Chart -->
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-7">
+                            <!-- Happiness Chart -->
+                                <div class="chart-wrapper">
+                                    <div class="chart-title">
+                                        <p>Rating of happiness as high - 2014</p>
+                                    </div>
+                                    <div class="chart-title">
+                                        <select id="select-happiness-rating">
+                                            <option value="high" selected>high 9 to 10</option>
+                                            <option value="ten">extremely happy</option>
+                                            <option value="nine">9</option>
+                                            <option value="eight">8</option>
+                                            <option value="seven">7</option>
+                                            <option value="six">6</option>
+                                            <option value="five">5</option>
+                                            <option value="four">4</option>
+                                            <option value="three">3</option>
+                                            <option value="two">2</option>
+                                            <option value="one">1</option>
+                                            <option value="zero">extremely unhappy</option>
+                                        </select>
+                                        <button class="sort-by-country">Sort by country</button>
+                                        <button class="sort-by-value">Sort by value</button>
+                                    </div>
+                                    <div class="chart-stage">
+                                        <div id="happiness-chart"></div>
+                                    </div>
+                                </div>
+                            <!-- Happiness Chart -->
+                            </div>
+                            <div class="col-xs-12 col-sm-5">
+                            <!-- Life Expectancy Chart -->
+                                <div class="chart-wrapper">
+                                    <div class="chart-title">
+                                        <p>Top 10 Healthy life expectancy at birth - all - 2015</p>
+                                    </div>
+                                    <div class="chart-title">
+                                        <select id="select-sex">
+                                            <option value="all" selected>male and female</option>
+                                            <option value="male">male</option>
+                                            <option value="female">female</option>
+                                        </select>
+                                    </div>
+                                    <div class="chart-stage">
+                                        <div id="life-expectancy-chart"></div>
+                                    </div>
+                                </div>
+                            <!-- Life Expectancy Chart -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                    <!-- Life worthwhileness Chart -->
                         <div class="chart-wrapper">
                             <div class="chart-title">
-                                <p>Rating of happiness as high - 2014</p>
+                                <p>I strongly agree or agree what I do in life is worthwhile - 2012</p>
                             </div>
                             <div class="chart-title">
-                                <select id="select-happiness-rating">
-                                    <option value="high" selected>high 9 to 10</option>
-                                    <option value="ten">extremely happy</option>
-                                    <option value="nine">9</option>
-                                    <option value="eight">8</option>
-                                    <option value="seven">7</option>
-                                    <option value="six">6</option>
-                                    <option value="five">5</option>
-                                    <option value="four">4</option>
-                                    <option value="three">3</option>
-                                    <option value="two">2</option>
-                                    <option value="one">1</option>
-                                    <option value="zero">extremely unhappy</option>
+                                <select id="select-life-worthwhileness">
+                                    <option value="agree-or-strongly-agree" selected>agree or strongly agree</option>
+                                    <option value="strongly-agree">strongly agree</option>
+                                    <option value="agree">agree</option>
                                 </select>
                                 <button class="sort-by-country">Sort by country</button>
                                 <button class="sort-by-value">Sort by value</button>
                             </div>
                             <div class="chart-stage">
-                                <div id="happiness-chart"></div>
+                                <div id="life-worthwhileness-chart"></div>
                             </div>
                         </div>
-                    <!-- Happiness Chart -->
+                    <!-- Life worthwhileness Chart -->
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-12">
                     <!-- Personal Finance -->
                         <div class="chart-wrapper">
                             <div class="chart-title">
@@ -102,21 +154,7 @@
                         </div>
                     <!-- Personal Finance -->
                     </div>
-                </div>
-            </div>
-			<div class="col-sm-6">
-				<div class="row">
-					<div class="col-sm-6">
-					<!-- Median equivalised net income Chart -->
-						<div class="chart-wrapper">
-							<div class="chart-title">Top 10 Median equivalised net income in PPS - 2015</div>
-							<div class="chart-stage">
-								<div id="net-income-chart"></div>
-							</div>
-						</div>
-					<!-- Median equivalised net income Chart -->
-					</div>
-					<div class="col-sm-6">
+                    <div class="col-xs-12 col-sm-6">
 					<!-- Unemployment rate Chart -->
 						<div class="chart-wrapper">
 							<div class="chart-title">Top 10 Harmonised unemployment rate - 2015</div>
@@ -126,146 +164,120 @@
 						</div>
 					<!-- Unemployment rate Chart -->
 					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-			<!-- Life worthwhileness Chart -->
-				<div class="chart-wrapper">
-                    <div class="chart-title">
-                        <p>I strongly agree or agree what I do in life is worthwhile - 2012</p>
-                    </div>
-					<div class="chart-title">
-                        <select id="select-life-worthwhileness">
-                            <option value="agree-or-strongly-agree" selected>agree or strongly agree</option>
-                            <option value="strongly-agree">strongly agree</option>
-                            <option value="agree">agree</option>
-                        </select>
-                        <button class="sort-by-country">Sort by country</button>
-                        <button class="sort-by-value">Sort by value</button>
-                    </div>
-					<div class="chart-stage">
-						<div id="life-worthwhileness-chart"></div>
+                    <div class="col-xs-12 col-sm-6">
+					<!-- Median equivalised net income Chart -->
+						<div class="chart-wrapper">
+							<div class="chart-title">Top 10 Median equivalised net income in PPS - 2015</div>
+							<div class="chart-stage">
+								<div id="net-income-chart"></div>
+							</div>
+						</div>
+					<!-- Median equivalised net income Chart -->
 					</div>
-				</div>
-			<!-- Life worthwhileness Chart -->
-			</div>
-			<div class="col-sm-6">
-			<!-- Where Europeans Live Chart -->
-				<div class="chart-wrapper">
-					<div class="chart-title">
-                        <p>Percentage of the population rating their satisfaction with their accommodation as high - 2013</p>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                    <!-- Where Europeans Live Chart -->
+                        <div class="chart-wrapper">
+                            <div class="chart-title">
+                                <p>Percentage of the population rating their satisfaction with their accommodation as high - 2013</p>
+                            </div>
+                            <div class="chart-title">
+                                <select id="select-where-europeans-live">
+                                    <option value="accommodation-satisfaction" selected>accommodation satisfaction</option>
+                                    <option value="feel-safe">feeling safe when walking alone at night</option>
+                                    <option value="green-areas-satisfaction">satisfaction with recreational and green areas</option>
+                                </select>
+                                <button class="sort-by-country">Sort by country</button>
+                                <button class="sort-by-value">Sort by value</button>
+                            </div>
+                            <div class="chart-stage">
+                                <div id="where-europeans-live-chart"></div>
+                            </div>
+                        </div>
+                    <!-- Where Europeans Live Chart -->
                     </div>
-                    <div class="chart-title">
-                        <select id="select-where-europeans-live">
-                            <option value="accommodation-satisfaction" selected>accommodation satisfaction</option>
-                            <option value="feel-safe">feeling safe when walking alone at night</option>
-                            <option value="green-areas-satisfaction">satisfaction with recreational and green areas</option>
-                        </select>
-                        <button class="sort-by-country">Sort by country</button>
-                        <button class="sort-by-value">Sort by value</button>
+                    <div class="col-sm-12 col-md-6">
+                    <!-- Neighbourhood Chart -->
+                        <div class="chart-wrapper">
+                            <div class="chart-title">
+                                <p>Feeling close to people in the area where I live - 2012</p>
+                            </div>
+                            <div class="chart-title">
+                                <select id="select-neighbourhood">
+                                    <option value="agree-or-strongly-agree" selected>agree or strongly agree</option>
+                                    <option value="strongly-agree">strongly agree</option>
+                                    <option value="agree">agree</option>
+                                </select>
+                                <button class="sort-by-country">Sort by country</button>
+                                <button class="sort-by-value">Sort by value</button>
+                            </div>
+                            <div class="chart-stage">
+                                <div id="neighbourhood-chart"></div>
+                            </div>
+                        </div>
+                    <!-- Neighbourhood Chart -->
                     </div>
-					<div class="chart-stage">
-						<div id="where-europeans-live-chart"></div>
-					</div>
-				</div>
-			<!-- Where Europeans Live Chart -->
-			</div>
-			<div class="col-sm-6">
-			<!-- Neighbourhood Chart -->
-				<div class="chart-wrapper">
-                    <div class="chart-title">
-                        <p>Feeling close to people in the area where I live - 2012</p>
+                    <div class="col-sm-12 col-md-6">
+                    <!-- Relationships Chart -->
+                        <div class="chart-wrapper">
+                            <div class="chart-title">
+                                <p>Average rating of satisfaction with personal relationships (1-10) 2013</p>
+                            </div>
+                            <div class="chart-title">
+                                <select id="select-relationships">
+                                    <option value="relationships-satisfaction" selected>relationships satisfaction</option>
+                                    <option value="social-support">social support</option>
+                                    <option value="loneliness">loneliness</option>
+                                </select>
+                                <button class="sort-by-country">Sort by country</button>
+                                <button class="sort-by-value">Sort by value</button>
+                            </div>
+                            <div class="chart-stage">
+                                <div id="relationships-chart"></div>
+                            </div>
+                        </div>
+                    <!-- Relationships Chart -->
                     </div>
-					<div class="chart-title">
-                        <select id="select-neighbourhood">
-                            <option value="agree-or-strongly-agree" selected>agree or strongly agree</option>
-                            <option value="strongly-agree">strongly agree</option>
-                            <option value="agree">agree</option>
-                        </select>
-                        <button class="sort-by-country">Sort by country</button>
-                        <button class="sort-by-value">Sort by value</button>
+                    <div class="col-sm-12 col-md-6">
+                    <!-- Health Chart -->
+                        <div class="chart-wrapper">
+                            <div class="chart-title">
+                                <p>Percentage of adults aged 15 and over reporting to be in good or better than good health - 2014</p>
+                            </div>
+                            <div class="chart-title">
+                                <select id="select-health-chart">
+                                    <option value="good-health" selected>perceived good health</option>
+                                    <option value="mental-health">mental health scale</option>
+                                </select>
+                                <select id="select-age-good-health">
+                                    <option value="15-plus" selected>Age 15+</option>
+                                    <option value="15-24">Age 15-24</option>
+                                    <option value="25-44">Age 25-44</option>
+                                    <option value="45-64">Age 45-64</option>
+                                    <option value="65-plus">Age 65+</option>
+                                </select>
+                                <select id="select-age-mental-health">
+                                    <option value="all" selected>All ages</option>
+                                    <option value="18-24">Age 18-24</option>
+                                    <option value="25-34">Age 25-34</option>
+                                    <option value="35-49">Age 35-49</option>
+                                    <option value="50-64">Age 50-64</option>
+                                    <option value="65-plus">Age 65+</option>
+                                </select>
+                                <button class="sort-by-country">Sort by country</button>
+                                <button class="sort-by-value">Sort by value</button>
+                            </div>
+                            <div class="chart-stage">
+                                <div id="health-chart"></div>
+                            </div>
+                        </div>
+                    <!-- Health Chart -->
                     </div>
-					<div class="chart-stage">
-						<div id="neighbourhood-chart"></div>
-					</div>
-				</div>
-			<!-- Neighbourhood Chart -->
-			</div>
-			<div class="col-sm-6">
-			<!-- Relationships Chart -->
-				<div class="chart-wrapper">
-					<div class="chart-title">
-                        <p>Average rating of satisfaction with personal relationships (1-10) 2013</p>
-                    </div>
-                    <div class="chart-title">
-                        <select id="select-relationships">
-                            <option value="relationships-satisfaction" selected>relationships satisfaction</option>
-                            <option value="social-support">social support</option>
-                            <option value="loneliness">loneliness</option>
-                        </select>
-                        <button class="sort-by-country">Sort by country</button>
-                        <button class="sort-by-value">Sort by value</button>
-                    </div>
-					<div class="chart-stage">
-						<div id="relationships-chart"></div>
-					</div>
-				</div>
-			<!-- Relationships Chart -->
-			</div>
-			<div class="col-sm-6">
-			<!-- Health Chart -->
-				<div class="chart-wrapper">
-					<div class="chart-title">
-                        <p>Percentage of adults aged 15 and over reporting to be in good or better than good health - 2014</p>
-                    </div>
-                    <div class="chart-title">
-                        <select id="select-health-chart">
-                            <option value="good-health" selected>perceived good health</option>
-                            <option value="mental-health">mental health scale</option>
-                        </select>
-                        <select id="select-age-good-health">
-                            <option value="15-plus" selected>Age 15+</option>
-                            <option value="15-24">Age 15-24</option>
-                            <option value="25-44">Age 25-44</option>
-                            <option value="45-64">Age 45-64</option>
-                            <option value="65-plus">Age 65+</option>
-                        </select>
-                        <select id="select-age-mental-health">
-                            <option value="all" selected>All ages</option>
-                            <option value="18-24">Age 18-24</option>
-                            <option value="25-34">Age 25-34</option>
-                            <option value="35-49">Age 35-49</option>
-                            <option value="50-64">Age 50-64</option>
-                            <option value="65-plus">Age 65+</option>
-                        </select>
-                        <button class="sort-by-country">Sort by country</button>
-                        <button class="sort-by-value">Sort by value</button>
-                    </div>
-					<div class="chart-stage">
-						<div id="health-chart"></div>
-					</div>
-				</div>
-			<!-- Health Chart -->
-			</div>
-			<div class="col-sm-6">
-			<!-- Life Expectancy Chart -->
-				<div class="chart-wrapper">
-					<div class="chart-title">
-                        <p>Top 10 Healthy life expectancy at birth - all - 2015</p>
-                    </div>
-                    <div class="chart-title">
-                        <select id="select-sex">
-                            <option value="all" selected>male and female</option>
-                            <option value="male">male</option>
-                            <option value="female">female</option>
-                        </select>
-                    </div>
-					<div class="chart-stage">
-						<div id="life-expectancy-chart"></div>
-					</div>
-				</div>
-			<!-- Life Expectancy Chart -->
-			</div>
+                </div>
+            </div>
 		</div>
   </div>
 

@@ -49,3 +49,8 @@ select
 {
     display:none;
 }
+
+td
+{
+    width: 140px;
+}
