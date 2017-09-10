@@ -55,10 +55,20 @@ td
     width: 140px;
 }
 
+.full-width
+{
+    width: 100%;
+}
+
+.half-width
+{
+    width: 50%;
+}
+
 .chart-wrapper .chart-stage
 {
-    overflow: auto;
-}
+        overflow: auto;
+ }
 
 @media (max-width: 767px) {
 
@@ -66,5 +76,6 @@ td
     {
         display: block;
     }
-
 }
+
+

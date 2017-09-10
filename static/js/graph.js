@@ -349,11 +349,13 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         $("#select-age-mental-health").on( "change", selectAgeForMentalHealth);
         $("#select-sex").on( "change", selectLifeExpectancySex);
         $(".chart-title button").on("click", sortChart);
+        setWidth();
+        resize();
     });
 
 
     lifeSatisfactionChart
-		.width(620)
+		.width(800)
 		.height(680)
 		.dimension(lifeSatDim)
 		.group(lifeSatGroup)
@@ -1180,6 +1182,35 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
                 }
             }
         }
+    }
+
+
+    function setWidth() {
+        var lgCol = $('.col-md-6-js');
+        var smCol = $('.col-md-3-js');
+        var mdCol = $('.col-md-js');
+
+        if ($(window).width() < 1500 ) {
+            lgCol.addClass('full-width');
+            smCol.addClass('half-width');
+        }
+        else
+        {
+            lgCol.removeClass('full-width');
+            smCol.removeClass('half-width');
+        }
+
+        if ($(window).width() < 1025 ) {
+            mdCol.addClass('full-width');
+        }
+        else
+        {
+            mdCol.removeClass('full-width');
+        }
+    }
+
+    function resize() {
+        $(window).on('resize', setWidth);
     }
 
 
