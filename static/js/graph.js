@@ -826,7 +826,6 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         }
 	}
 
-
 	function sortChart() {
 
         if ($(this).parent().next('div').children().attr('id') == "personal-finance-chart") {
@@ -1166,7 +1165,6 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
             }
         }
     }
-
 
     function setWidth() {
         var lgCol = $('.col-md-6-js');
