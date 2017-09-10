@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="{{ url_for ('static', filename='lib/css/keen-dashboards.css')}}">
 	<link rel="stylesheet" href="{{ url_for ('static', filename='lib/css/dc.css')}}">
 	<link rel="stylesheet" href="{{ url_for ('static', filename='css/custom.css')}}">
+    <link rel="stylesheet" href="{{url_for ('static', filename='lib/css/introjs.min.css')}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -16,9 +17,8 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="./">Europe Wellbeing</a>
-			</div>
-            <div class="navbar-header navbar-header--right">
-				<button class="btn btn--reset-js" href="./">Reset all</button>
+                <button class="intro_button btn" type="button" autofocus onclick="javascript:introJs().start();">Start Tour!</button>
+				<button class="btn btn--reset" href="./">Reset all</button>
 			</div>
 		</div>
 	</div>
@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-8">
                             <!-- Life Satisfaction Map -->
-                                <div class="chart-wrapper">
+                                <div class="chart-wrapper" data-step="1" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                                     <div class="chart-title">Mean rating of life satisfaction (1 to 10) - 2015</div>
                                     <div class="chart-stage">
                                         <div id="life-satisfaction-map"></div>
@@ -41,7 +41,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4">
                             <!-- Life Satisfaction Table -->
-                                <div class="chart-wrapper">
+                                <div class="chart-wrapper" data-step="2" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                                     <div class="chart-title">
                                         <p>Mean rating of life satisfaction (1 to 10) - 2015</p>
                                     </div>
@@ -62,7 +62,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-7">
                             <!-- Happiness Chart -->
-                                <div class="chart-wrapper">
+                                <div class="chart-wrapper" data-step="3" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                                     <div class="chart-title">
                                         <p>Rating of happiness as high - 2014</p>
                                     </div>
@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-5">
                             <!-- Life Expectancy Chart -->
-                                <div class="chart-wrapper">
+                                <div class="chart-wrapper" data-step="4" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                                     <div class="chart-title">
                                         <p>Top 10 Healthy life expectancy at birth - all - 2015</p>
                                     </div>
@@ -115,7 +115,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-md-js">
             <!-- Life worthwhileness Chart -->
-                <div class="chart-wrapper">
+                <div class="chart-wrapper" data-step="5" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                     <div class="chart-title">
                         <p>I strongly agree or agree what I do in life is worthwhile - 2012</p>
                     </div>
@@ -136,7 +136,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-md-js">
             <!-- Personal Finance -->
-                <div class="chart-wrapper">
+                <div class="chart-wrapper" data-step="6" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                     <div class="chart-title">
                         <p>Percentage of the population rating their satisfaction with their job as high - 2013</p>
                     </div>
@@ -160,7 +160,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                     <!-- Unemployment rate Chart -->
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" data-step="7" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                             <div class="chart-title">Top 10 Harmonised unemployment rate - 2015</div>
                             <div class="chart-stage">
                                 <div id="unemployment-rate-chart"></div>
@@ -170,7 +170,7 @@
                     </div>
                     <div class="col-sm-6">
                     <!-- Median equivalised net income Chart -->
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" data-step="8" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                             <div class="chart-title">Top 10 Median equivalised net income in PPS - 2015</div>
                             <div class="chart-stage">
                                 <div id="net-income-chart"></div>
@@ -184,7 +184,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-md-js">
                     <!-- Where Europeans Live Chart -->
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" data-step="9" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                             <div class="chart-title">
                                 <p>Percentage of the population rating their satisfaction with their accommodation as high - 2013</p>
                             </div>
@@ -205,7 +205,7 @@
                     </div>
                     <div class="col-sm-12 col-md-6 col-md-js">
                     <!-- Neighbourhood Chart -->
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" data-step="10" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                             <div class="chart-title">
                                 <p>Feeling close to people in the area where I live - 2012</p>
                             </div>
@@ -230,7 +230,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-md-js">
                     <!-- Relationships Chart -->
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" data-step="11" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                             <div class="chart-title">
                                 <p>Average rating of satisfaction with personal relationships (1-10) 2013</p>
                             </div>
@@ -251,7 +251,7 @@
                     </div>
                     <div class="col-sm-12 col-md-6 col-md-js">
                     <!-- Health Chart -->
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" data-step="12" data-intro="The description that you want" style="font-weight: normal" data-position="right">
                             <div class="chart-title">
                                 <p>Percentage of adults aged 15 and over reporting to be in good or better than good health - 2014</p>
                             </div>
@@ -301,6 +301,7 @@
   <script src="{{ url_for ('static', filename='lib/js/queue.js')}}"></script>
   <script src="{{ url_for ('static', filename='lib/js/keen.min.js')}}"></script>
   <script src="{{ url_for ('static', filename='js/graph.js')}}"></script>
+  <script src="{{url_for ('static', filename='lib/js/intro.min.js')}}" type="text/javascript"></script>
 
 </body>
 </html>

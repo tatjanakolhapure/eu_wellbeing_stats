@@ -349,7 +349,7 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
         $("#select-age-mental-health").on( "change", selectAgeForMentalHealth);
         $("#select-sex").on( "change", selectLifeExpectancySex);
         $(".chart-title button").on("click", sortChart);
-        $(".btn--reset-js").on("click", resetAll);
+        $(".btn--reset").on("click", resetAll);
         setWidth();
         resize();
     });

@@ -73,16 +73,20 @@ select
         overflow: auto;
 }
 
-.navbar-header--right
+.navbar-header
 {
-    float: right;
-    padding: 8px 0;
+    width: 100%;
 }
 
-.navbar-header:before,
-.navbar-header:after
+.btn--reset
 {
-   content: none;
+    float: right;
+}
+
+.btn--reset,
+.intro_button
+{
+    margin: 8px 0;
 }
 
 @media (max-width: 767px) {
@@ -93,10 +97,10 @@ select
         margin-bottom: 12px;
     }
 
-    .navbar-header--right
+    .btn--reset
     {
         float: right;
-        padding: 8px 15px;
+        margin: 8px -15px;
     }
 
 }
