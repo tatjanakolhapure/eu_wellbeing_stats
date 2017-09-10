@@ -71,7 +71,19 @@ select
 .chart-wrapper .chart-stage
 {
         overflow: auto;
- }
+}
+
+.navbar-header--right
+{
+    float: right;
+    padding: 8px 0;
+}
+
+.navbar-header:before,
+.navbar-header:after
+{
+   content: none;
+}
 
 @media (max-width: 767px) {
 
@@ -80,6 +92,13 @@ select
         display: block;
         margin-bottom: 12px;
     }
+
+    .navbar-header--right
+    {
+        float: right;
+        padding: 8px 15px;
+    }
+
 }
 
 
