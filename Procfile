@@ -1,0 +1,1 @@
+web: gunicorn eu_wellbeing_stats:app
