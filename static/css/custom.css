@@ -13,6 +13,8 @@
 .dc-chart .x.axis text
 {
     text-anchor: end !important;
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
     transform: rotate(-45deg);
 }
 
@@ -82,6 +84,11 @@ select
 .intro_button
 {
     margin-right: 5px;
+}
+
+.chart-wrapper .chart-title
+{
+    font-weight: 400;
 }
 
 @media (max-width: 767px) {
