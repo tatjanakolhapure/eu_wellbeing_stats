@@ -13,8 +13,9 @@
 .dc-chart .x.axis text
 {
     text-anchor: end !important;
-    -ms-transform: rotate(-45deg); /* IE 9 */
-    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
 
