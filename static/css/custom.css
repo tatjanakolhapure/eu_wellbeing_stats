@@ -92,6 +92,11 @@ select
     font-weight: 400;
 }
 
+button
+{
+    -webkit-appearance: none;
+}
+
 @media (max-width: 767px) {
 
     select
