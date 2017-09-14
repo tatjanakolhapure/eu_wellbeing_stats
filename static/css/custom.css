@@ -117,4 +117,10 @@ select
         padding: 6px 8px;
     }
 
+    .navbar .container-fluid
+    {
+        padding-right: 0;
+        padding-left: 10px;
+    }
+
 }
