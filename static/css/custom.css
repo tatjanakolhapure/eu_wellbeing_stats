@@ -13,10 +13,8 @@
 .dc-chart .x.axis text
 {
     text-anchor: end !important;
-    -ms-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(7deg); /* IE 9 */
+    -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
     transform: rotate(-45deg);
 }
 
