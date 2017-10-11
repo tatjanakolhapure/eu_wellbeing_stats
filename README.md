@@ -55,7 +55,21 @@ The map chart is changing its size depending on the device screen size to make s
 The website tour guides you through each chart highlighting it and explaining what each chart is about and how to use it. 
 
 ## Technology
-The project is designed using micro web framework Flask in JetBrains PyCharm. Data stored in noSQL database MongoDB. Data dashboard created using DC.js (JavaScript charting library), D3.js (JavaScript library for visualizing data) and crossfilter.js (JavaScript library for exploring large multivariate datasets). Languages used - HTML, CSS, jQuery and Python.
+The project is designed using micro web framework Flask in JetBrains PyCharm to retrieve the data from the database and return it to the browser. Data stored in noSQL database MongoDB. The database itself was created using MongoDB Shell and populated with data and updated when required using Python. Data dashboard created using DC.js (JavaScript charting library), Keen Dashboards, D3.js (JavaScript library for visualizing data) and crossfilter.js (JavaScript library for exploring large multivariate datasets). Intro.js was used to create the website tour. Queue.js library was used to load multiple files (database data and geojson file for the map chart) before running the rest of the code. Geojson file with countries data was dowloaded from [here](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/countries.geojson). DC.js, D3.js and Crossfilter.js docummentation and examples were used for reference when creating charts. 
+
+Each document in the database holds data for a separate country. And each country may hold different data (key value pairs or list or array). One country may have data for one subject but not for other etc. So the biggest challenge was to filter undefined data:
+- if statement was used when cleaning data
+- if statement was used when defining dimensions
+- groups had to be filtered so the chart does not show undefined bar when sorting it by country
+- domains had to be filtered when sorting data by value
+- columns in life satisfaction data table had to be filtered
+- if statement was used for title definition on the map chart
+
+The function remove_empty_bins to filter groups for undefined data was used from DC.js docummentation [here](https://github.com/dc-js/dc.js/wiki/FAQ#remove-empty-bins). And it was modified for the project accordingly. The solution for sorting charts by value was found on DC.js GitHub Issues page [here](https://github.com/dc-js/dc.js/issues/156).
+
+Vertical bar charts show only top ten countries. In order to show only ten countries the function getTops was used to create fake groups. Solution was found on [this stack overflow page](https://stackoverflow.com/questions/30977987/plotting-top-values-of-a-group-on-dc-js-bar-chart). In order to sort data by value the chaty property ordering was used. Solution found on DC.js GitHub Issues page [here](https://github.com/dc-js/dc.js/issues/384).
+
+Several functions were created for select drop down menus to render different charts depending on selection chosen. 
 
 ## Validation and Testing
 
