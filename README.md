@@ -104,5 +104,20 @@ There is one issue, which was not possible to solve. In the happiness rating cha
 
 ## Deployment
 
+The repository for the project is available on GitHub. But the website was deployed on Heroku. It is available [here](https://europe-wellbeing.herokuapp.com/).
+
+1. Heroku app was created on Heroku website in the section apps
+2. Python package gunicorn was installed
+3. Requirements text file created with all the dependencies
+4. Procfile and Procfile.windows files created
+5. The command "heroku ps:scale web=1" was run
+6. mLab MongoDB was installed on Heroku
+7. New database user and new collection was created in mLab Dashboard
+8. Data from local database was exported via Mongo Management Studio to json file.
+9. Json file with data then was imported to heroku database using mongoimport command
+10. eu_wellbeing_stats.py file was updated with news database details
+11. Config variables MONGO_DB_NAME and MONGODB_URI were set in the heroku app settings
+12. Connection variable updated in eu_wellbeing_stats.py file
+
 
 
