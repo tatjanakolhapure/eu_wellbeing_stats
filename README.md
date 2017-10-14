@@ -81,5 +81,17 @@ And function resetAll is for the reset button in the navigation. It resets all f
 
 ## Validation and Testing
 
+During the development, the code was tested constantly. HTML and CSS was tested by using inspect tool in the browser (e.g. to make sure that the appropriate style was applied to the right element or to experiment with other CSS styles). JavaScript/ jQuery was tested by using console section in the browser's developer tools. If there were any errors in the browser console they would normally tell where exactly the mistake is. Console.log() function was also used in the code to check if function has been called or to check if the value of the variable is correct. 
+
+The code was validated using HTML validator The W3C Markup Validation Service, CSS validator The W3C CSS Validation Service, JavaScript validator JSLint. No errors were found.
+
+The website was tested in different browsers to make sure that each browser renders the website as expected. When testing was done it has been noted that  -ms-transform: rotate(-45deg) CSS property is not working in Internet Explorer and Microsoft Edge. No solution was found on the web. 
+
+The website was also tested on few mobile devices - few Android phones (Samsung and HTC) and on Apple phones (iPhone 4 and iPhone 5). It has been noted that font-weight is rendered differently on Apple iPhone 4 for chart titles so the font-weight was defined in the custom stylesheet to make sure that browsers do not apply their own font-weight to chart titles. 
+
+For responsiveness, the website was tested in Google Chrome using Toggle Device Toolbar in Developer Tools as also Responsive Web Design Tester extension.
 
 ## Deployment
+
+
+
