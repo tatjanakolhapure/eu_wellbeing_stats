@@ -289,37 +289,37 @@ function makeGraphs(error, europeStatsWellbeing, countriesJson) {
     lonelinessGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {lonelinessByValue.push(d.key)}});
 
     var goodHealth15plusByValue = [];
-    goodHealth15plusGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth15plusByValue.push(d.key)}});
+    goodHealth15plusGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {goodHealth15plusByValue.push(d.key)}});
 
     var goodHealth15to24ByValue = [];
-    goodHealth15to24Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth15to24ByValue.push(d.key)}});
+    goodHealth15to24Group.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {goodHealth15to24ByValue.push(d.key)}});
 
     var goodHealth25to44ByValue = [];
-    goodHealth25to44Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth25to44ByValue.push(d.key)}});
+    goodHealth25to44Group.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {goodHealth25to44ByValue.push(d.key)}});
 
     var goodHealth45to64ByValue = [];
-    goodHealth45to64Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth45to64ByValue.push(d.key)}});
+    goodHealth45to64Group.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {goodHealth45to64ByValue.push(d.key)}});
 
     var goodHealth65plusByValue = [];
-    goodHealth65plusGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {goodHealth65plusByValue.push(d.key)}});
+    goodHealth65plusGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {goodHealth65plusByValue.push(d.key)}});
 
     var mentalHealthTotalByValue = [];
-    mentalHealthTotalGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealthTotalByValue.push(d.key)}});
+    mentalHealthTotalGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {mentalHealthTotalByValue.push(d.key)}});
 
     var mentalHealth18to24ByValue = [];
-    mentalHealth18to24Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth18to24ByValue.push(d.key)}});
+    mentalHealth18to24Group.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {mentalHealth18to24ByValue.push(d.key)}});
 
     var mentalHealth25to34ByValue = [];
-    mentalHealth25to34Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth25to34ByValue.push(d.key)}});
+    mentalHealth25to34Group.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {mentalHealth25to34ByValue.push(d.key)}});
 
     var mentalHealth35to49ByValue = [];
-    mentalHealth35to49Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth35to49ByValue.push(d.key)}});
+    mentalHealth35to49Group.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {mentalHealth35to49ByValue.push(d.key)}});
 
     var mentalHealth50to64ByValue = [];
-    mentalHealth50to64Group.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth50to64ByValue.push(d.key)}});
+    mentalHealth50to64Group.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {mentalHealth50to64ByValue.push(d.key)}});
 
     var mentalHealth65PlusByValue = [];
-    mentalHealth65PlusGroup.top(Infinity).forEach(function (d) {if (!isNaN(+d.value)) {mentalHealth65PlusByValue.push(d.key)}});
+    mentalHealth65PlusGroup.top(Infinity).forEach(function (d) {if (!isNaN(d.value)) {mentalHealth65PlusByValue.push(d.key)}});
 
     //Charts
     var lifeSatisfactionChart = dc.geoChoroplethChart("#life-satisfaction-map");
