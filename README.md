@@ -1,12 +1,12 @@
 # Europe Wellbeing Statistics
 
 ## Table of Contents
-- [Overview and goals](##Overviewandgoals)
-- [Design](##Design)
-- [Content and Functionality](##ContentandFunctionality)
-- [Technology](##Technology)
-- [Validation and Testing](##ValidationandTesting)
-- [Deployment](##Deployment)
+- [Overview and goals](#overview-and-goals)
+- [Design](#design)
+- [Content and Functionality](#content-and-functionality)
+- [Technology](#technology)
+- [Validation and Testing](#validation-and-testing)
+- [Deployment](#deployment)
 
 ## Overview and goals
 
