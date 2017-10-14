@@ -100,6 +100,8 @@ The website was also tested on few mobile devices - few Android phones (Samsung 
 
 For responsiveness, the website was tested in Google Chrome using Toggle Device Toolbar in Developer Tools as also Responsive Web Design Tester extension.
 
+There is one issue, which was not possible to solve. In the happiness rating chart, when you select "extremely happy" option from the drop down menu, it will render a new chart, which must be sorted by value. But some values are not sorted correctly. The same happens in the perceived good health chart. This might be due to unnaturally ordered dimensions. 
+
 ## Deployment
 
 
