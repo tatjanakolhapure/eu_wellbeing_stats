@@ -104,7 +104,7 @@ There is one issue, which was not possible to solve. In the happiness rating cha
 
 ## Deployment
 
-The repository for the project is available on GitHub. But the website was deployed on Heroku. It is available [here](https://europe-wellbeing.herokuapp.com/).
+The repository for the project is available on GitHub. But the website was deployed on Heroku.
 
 1. Heroku app was created on Heroku website in the section apps
 2. Python package gunicorn was installed
